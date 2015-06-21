@@ -9,7 +9,6 @@ app.config(['$routeProvider', '$locationProvider',
 		//login and logout
 		
 		
-		
 		//
 		.when('/', 			{templateUrl: 'partials/index/index.html',controller: 'IndexCtrl'})
 		

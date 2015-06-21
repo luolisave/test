@@ -1,0 +1,2 @@
+var TIME_INTERVAL = 5000;
+var TORONTO_TIME_ZONE = -5;

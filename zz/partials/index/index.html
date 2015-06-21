@@ -1,78 +1,113 @@
 <div class="row">
-    <div class="col col-md-6">
-        <div class="row">
-            <div class="col col-md-12">
-                <!-- panel starts -->
-                <div class="panel panel-default">
-                    <div class="panel-heading">信息</div>
-                    <div class="panel-body" id="wmud_message" >
-                        {{wmud.content}}
-                    </div>
-                </div>
-                <!-- panel ends -->
+    <div class="col col-md-2 col-sm-4 col-xs-12">
+        <div class="top-space">
+            <div style="margin-top: 15px;">Set Toronto time:</div>
+        </div>
+    </div>
+    <div class="col col-md-2 col-sm-4 col-xs-12">
+        <div class="top-space">
+            <input class="form-control" placeholder="16:25:51" ng-module="torontoTimeSetup" />
+        </div>
+    </div>
+    <div class="col col-md-2 col-sm-4 col-xs-12">
+        <div class="top-space">
+            <a type="submit" class="btn btn-default hidden-xs">Submit</a>
+            <a type="submit" class="btn btn-default hidden-lg hidden-md hidden-sm btn-block">Submit</a>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col col-md-6 col-sm-12 col-xs-12">
+        <div class="row top-space hidden-xs">
+            <div class="col col-sm-4">
+                <h3 style="margin-top:55px;">Toronto:</h3>
+            </div>
+            <div class="col col-sm-8">{{allTimes.toronto}}
+                <div style="font-size:68px;">{{1000 * allTimes.toronto  + 1000 * 60 * 60 * 24 * 365 * 30 | date:'HH:mm:ss'}}</div>
+            </div>
+        </div>
+        <div class="row top-space visible-xs">
+            <div class="col col-sm-4">
+                <h3 style="margin-top:55px;text-align:right;">Toronto</h3>
+            </div>
+            <div class="col col-sm-8">
+                <div style="font-size:68px;text-align:right;">{{1000 * allTimes.toronto  + 1000 * 60 * 60 * 24 * 365 * 30 | date:'HH:mm:ss'}}</div>
             </div>
         </div>
     </div>
-    <div class="col col-md-6">
-        <!-- panel starts (login)-->
-        <div class="panel panel-default" ng-hide="user.sessionId">
-            <div class="panel-heading">登录</div>
-            <div class="panel-body" id="wmud_message" >
-                Username: <input class="form-control" ng-model="user.username" />
-                Password: <input class="form-control" type="password" ng-model="user.password" />
-                <button class="form-control" ng-click="login()">登录</button>
+    <div class="col col-md-3 col-sm-6 col-xs-12">
+        <div class="top-space hidden-xs">
+            <div class="col col-sm-4">
+                <h4 style="margin-top:55px;">London:</h4>
+            </div>
+            <div class="col col-sm-8">
+                <div style="font-size:32px;margin-top:47px;">16:26:11</div>
             </div>
         </div>
-        <!-- panel ends (login)-->
-        <!-- panel starts -->
-        <div class="panel panel-default" ng-show="user.sessionId">
-            <div class="panel-heading">控制功能</div>
-            <div class="panel-body" id="wmud_message" >
-                <!-- row starts -->
-                <div class="row" >
-                    <div class="col col-xs-6">
-                        Walk:
-                        <div class="col col-lg-12">
-                            <button class="btn btn-primary" ng-click="walk('nw')">·</button>
-                            <button class="btn btn-primary" ng-click="walk('n')">·</button>
-                            <button class="btn btn-primary" ng-click="walk('ne')">·</button>
-                        </div>
-                        <div class="col col-lg-12">
-                            <button class="btn btn-primary" ng-click="walk('w')">·</button>
-                            <button class="btn btn-primary">·</button>
-                            <button class="btn btn-primary" ng-click="walk('e')">·</button>
-                        </div>
-                        <div class="col col-lg-12">
-                            <button class="btn btn-primary" ng-click="walk('sw')">·</button>
-                            <button class="btn btn-primary" ng-click="walk('s')">·</button>
-                            <button class="btn btn-primary" ng-click="walk('se')">·</button>
-                        </div>
-                    </div>
-                    
-                    <div class="col col-xs-6">
-                        Look:
-                        <div class="col col-lg-12">
-                            <button class="btn btn-primary" ng-click="look('nw')">·</button>
-                            <button class="btn btn-primary" ng-click="look('n')">·</button>
-                            <button class="btn btn-primary" ng-click="look('ne')">·</button>
-                        </div>
-                        <div class="col col-lg-12">
-                            <button class="btn btn-primary" ng-click="look('w')">·</button>
-                            <button class="btn btn-primary" ng-click="look('here')">·</button>
-                            <button class="btn btn-primary" ng-click="look('e')">·</button>
-                        </div>
-                        <div class="col col-lg-12">
-                            <button class="btn btn-primary" ng-click="look('sw')">·</button>
-                            <button class="btn btn-primary" ng-click="look('s')">·</button>
-                            <button class="btn btn-primary" ng-click="look('se')">·</button>
-                        </div>
-                    </div>
-                </div>
-                <!-- row ends -->
+        <div class="top-space visible-xs">
+            <div class="col col-sm-4">
+                <h4 style="text-align:right;">London:</h4>
+            </div>
+            <div class="col col-sm-8">
+                <div style="font-size:32px;text-align:right;">8:26:11</div>
             </div>
         </div>
-        <!-- panel ends -->
-        
+    </div>
+    <div class="col col-md-3 col-sm-6 col-xs-12">
+        <div class="top-space hidden-xs">
+            <div class="col col-sm-4">
+                <h4 style="margin-top:55px;">Sydney:</h4>
+            </div>
+            <div class="col col-sm-8">
+                <div style="font-size:32px;margin-top:47px;">16:26:11</div>
+            </div>
+        </div>
+        <div class="top-space visible-xs">
+            <div class="col col-sm-4">
+                <h4 style="text-align:right;">Sydney:</h4>
+            </div>
+            <div class="col col-sm-8">
+                <div style="font-size:32px;text-align:right;">8:26:11</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<hr style="border-top: 3px solid #000;" />
+
+<div class="row">
+    <div class="col-md-12">
+        <h4>Settings</h4>
+    </div>
+    <!-- London -->
+    <div class="col col-md-6 col-sm-12 col-xs-12">
+        <div class="row top-space hidden-xs">
+            <div class="col col-sm-5">
+                <div style="margin-top:10px;">Time difference for London</div>
+            </div>
+            <div class="col col-sm-3 col-xs-12">
+                <div style="margin-top:10px;"><input ng-model="timezoneLondon" class="form-control" placeholder="-6" /></div>
+            </div>
+            <div class="col col-sm-4 col-xs-12">
+                <div style="margin-top:10px;"><a class="btn btn-default btn-block">Submit</a></div>
+            </div>
+        </div>
     </div>
     
+    <!-- Sydney -->
+    <div class="col col-md-6 col-sm-12 col-xs-12">
+        <div class="row top-space">
+            <div class="col col-sm-5">
+                <div style="margin-top:10px;">Time difference for Sydney</div>
+            </div>
+            <div class="col col-sm-3 col-xs-12">
+                <div style="margin-top:10px;"><input ng-model="timezoneSydney" class="form-control" placeholder="-13" /></div>
+            </div>
+            <div class="col col-sm-4 col-xs-12">
+                <div style="margin-top:10px;"><a class="btn btn-default btn-block">Submit</a></div>
+            </div>
+        </div>
+    </div>
 </div>
