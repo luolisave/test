@@ -1,0 +1,14 @@
+{
+  "name": "liChat",
+  "license": "MIT",
+  "version": "2.0.1",
+  "description": "Simple chat application based on websocket.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/luolisave/test.git"
+  },
+  "dependencies": {
+    "express": "4.10.2",
+    "socket.io": "1.2.0"
+  }
+}

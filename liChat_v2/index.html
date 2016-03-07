@@ -1,0 +1,74 @@
+<!doctype html>
+<html>
+<head>
+    <title>liChat 2.0</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" >
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+    <script src="http://code.jquery.com/jquery-2.2.1.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
+
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                aaa
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">Nick Name</div>
+            <div class="col-md-10">.col-md-4</div>
+        </div>
+    </div>
+
+
+    
+<ul id="messages" style="padding-bottom:50px;"></ul>
+<form action="">
+    <input id="myname" autocomplete="off" placeholder="Nick"/>
+    <input id="m" autocomplete="off"/>
+    <button>Send</button>
+</form>
+
+<script>
+    var socket;
+    socket = io();
+    //socket = io.connect("https://lluo-ca-luolisave.c9users.io");
+
+    $('form').submit(function () {
+        var cmd = $('#m').val();
+        if (cmd == 'clear 7053') { //command message
+            socket.emit('cmd', 'clear');
+            $('#messages').append($('<li>').text('Clear serverside history.'));
+            $('#m').val('');
+        } else { //normal message
+            var tmp_msg = $('#myname').val() + ": " + $('#m').val();
+            $('title').text(tmp_msg);
+            socket.emit('chat message', tmp_msg);
+            $('#m').val('');
+        }
+        return false;
+    });
+    socket.on('chat message', function (msg) {
+        $('#messages').append($('<li>').text(msg));
+        window.scrollTo(0, document.body.scrollHeight);
+        $('title').text(msg);
+    });
+
+    socket.emit('load history', 'ALL');
+    //*
+    socket.on('load history', function (histories) {
+        for (var key in histories) {
+            var history = histories[key];
+            $('#messages').append($('<li>').text(history));
+        }
+        window.scrollTo(0, document.body.scrollHeight);
+    });
+    //*/
+</script>
+</body>
+</html>
