@@ -70,12 +70,19 @@
 <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
 <script>
     var socket;
+	var flag_blur;
     socket = io();
     //socket = io.connect("https://lluo-ca-luolisave.c9users.io");
+	
+	$(window).focus(function() {
+		flag_blur = false;
+	}).blur(function() {
+		flag_blur = true;
+	});
 
     $('form').submit(function () {
         var cmd = $('#m').val();
-        if (cmd == 'clear 7053') { //command message
+        if (cmd == 'clear all') { //command message
             socket.emit('cmd', 'clear');
             $('#messages').append($('<li>').text('Clear serverside history.'));
             $('#m').val('');
@@ -91,6 +98,24 @@
         $('#messages').append($('<li>').text(msg));
         window.scrollTo(0, document.body.scrollHeight);
         $('title').text(msg);
+		
+		//notification on browser 
+		var splitedString = msg.split(":"); console.log(splitedString);
+		var noticeTitle = splitedString[0] ? splitedString[0] : "";
+		var noticeBody = splitedString[1] ? splitedString[1] : "";
+		
+		if(flag_blur && window.Notification && Notification.permission !== "denied") {
+			Notification.requestPermission(function(status) {  // status is "granted", if accepted by user
+				var n = new Notification(
+					noticeTitle, 
+					{ 
+						body: noticeBody
+						//body: 'I am the body text!',
+						//icon: '/path/to/icon.png' // optional
+					}
+				); 
+			});
+		}
     });
 
     socket.emit('load history', 'ALL');
