@@ -2,7 +2,7 @@
 var net = require('net');
 
 var HOST = '127.0.0.1';
-var PORT = 8107;
+var PORT = 10701;
 
 var client = new net.Socket();
 client.connect(PORT, HOST, function() {
@@ -14,7 +14,7 @@ client.connect(PORT, HOST, function() {
 // Add a 'data' event handler for the client socket
 // data is what the server sent to this socket
 client.on('data', function(data) {
-    console.log('DATA: ' + data);
+    console.log('DATA back: ' + data);
     // Close the client socket completely
     client.destroy();
 });
