@@ -1,0 +1,11 @@
+{
+  "name": "net-logger",
+  "version": "0.0.1",
+  "description": "log incomming websocket text into file.",
+  "main": "index.js",
+  "scripts": {
+    "test": "node-dev server.js"
+  },
+  "author": "Li Luo",
+  "license": "ISC"
+}
