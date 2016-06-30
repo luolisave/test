@@ -9,8 +9,12 @@
   "author": "Li Luo",
   "license": "ISC",
   "devDependencies": {
-    "bower": "^1.7.9"
+    "bower": "^1.7.9",
+    "browser-sync": "^2.13.0",
+    "gulp": "^3.9.1"
   },
-  "dependencies": {
+  "dependencies": {},
+  "scripts": {
+	"test": "browser-sync start --server --startPath app"
   }
 }
