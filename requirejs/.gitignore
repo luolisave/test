@@ -1,0 +1,8 @@
+.DS_Store
+.idea
+tmp
+logs/*
+node_modules/
+app/bower_components/
+bower_components/
+tests/reports/

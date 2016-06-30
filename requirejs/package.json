@@ -1,0 +1,16 @@
+{
+  "name": "requirejs-try",
+  "version": "0.0.1",
+  "description": "Try to put requirejs and angularjs together.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Li Luo",
+  "license": "ISC",
+  "devDependencies": {
+    "bower": "^1.7.9"
+  },
+  "dependencies": {
+  }
+}
