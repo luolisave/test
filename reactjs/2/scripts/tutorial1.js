@@ -28,7 +28,7 @@ var CommentList = React.createClass({
         </Comment>
       );
     });
-    
+
     return (
       <div className="commentList">
         {commentNodes}
@@ -39,13 +39,20 @@ var CommentList = React.createClass({
 
 var CommentForm = React.createClass({
   getInitialState: function() {
-    return {author: '', text: ''};
+    return {
+      author: '',
+      text: ''
+    };
   },
   handleAuthorChange: function(e) {
-    this.setState({author: e.target.value});
+    this.setState({
+      author: e.target.value
+    });
   },
   handleTextChange: function(e) {
-    this.setState({text: e.target.value});
+    this.setState({
+      text: e.target.value
+    });
   },
   handleSubmit: function(e) {
     e.preventDefault();
@@ -54,13 +61,19 @@ var CommentForm = React.createClass({
     if (!text || !author) {
       return;
     }
-    
+
     // special use todo callback. will pass object to parent event handler
-    this.props.onCommentSubmit({author: author, text: text}); 
-    
+    this.props.onCommentSubmit({
+      author: author,
+      text: text
+    });
+
     // TODO: send request to the server
     console.log("TODO: send request to the server.");
-    this.setState({author: '', text: ''});
+    this.setState({
+      author: '',
+      text: ''
+    });
   },
   render: function() {
     return (
@@ -99,7 +112,9 @@ var CommentBox = React.createClass({
       dataType: 'json',
       cache: false,
       success: function(data) {
-        this.setState({data: data});
+        this.setState({
+          data: data
+        });
       }.bind(this),
       error: function(xhr, status, err) {
         console.error(this.props.url, status, err.toString());
@@ -107,7 +122,9 @@ var CommentBox = React.createClass({
     });
   },
   getInitialState: function() {
-    return {data: []};
+    return {
+      data: []
+    };
   },
   componentDidMount: function() {
     this.loadCommentsFromServer();
