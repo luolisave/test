@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset='utf-8'>
+		
+		<title>RequireJs Try Sample Project</title>
+		
+		<link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+		<link href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet" />
+		
+		<script src="bower_components/underscore/underscore-min.js"></script>
+		<script src="bower_components/jquery/dist/jquery.min.js"></script>
+		<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script src="bower_components/angular/angular.min.js"></script>
+        <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+        <script src="bower_components/oclazyload/dist/ocLazyLoad.min.js"></script>
+		
+		
+	</head>
+	<body ng-controller="BodyController">
+		<h1>Require JS Try</h1>
+        <span>{{greetMe}}</span> 
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        
+        <div ui-view></div>
+        
+        <br>
+        
+        <ul>
+            <li><a ui-sref="home">home</a></li>
+            <li><a ui-sref="home2">home 2</a></li>
+            <li><a ui-sref="home3">home 3 (dynamic controller loading)</a></li>
+        </ul>
+        
+        
+        
+        
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <a ng-click="testClick()">testClick()</a>
+        <a ng-click="testAppClick()">testAppClick()</a>
+        
+        
+        <!-- -->
+        <script data-main="config/boot/init" src="bower_components/requirejs/require.js"></script>
+        <!-- -->
+	</body>
+</html>
