@@ -1,7 +1,0 @@
-.DS_Store
-.idea
-tmp
-logs/*
-node_modules/
-bower_components/
-tests/reports/
