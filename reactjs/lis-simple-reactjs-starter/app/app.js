@@ -8,7 +8,17 @@ window.App = React.createClass({
   render() {
     return (
       <div>
-        <img className="img-responsive" src="assets/img/logo.png" />
+        <div className="row">
+            <div className="col-sm-4">
+                <img className="img-responsive" src="assets/img/logo.png" />
+            </div>
+            <div className="col-sm-6">
+                
+            </div>
+            <div className="col-sm-2">
+                <span className="pull-right">Li's ReactJS Starter v0.0.1</span>
+            </div>
+        </div>
         <nav className="navbar navbar-inverse">
             <div className="container-fluid">
                 <div className="navbar-header">
