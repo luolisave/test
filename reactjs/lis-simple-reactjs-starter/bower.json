@@ -1,0 +1,26 @@
+{
+  "name": "lis-simple-reactjs-starter",
+  "description": "Li's simple Reactjs starter",
+  "main": "index.js",
+  "authors": [
+    "Li Luo"
+  ],
+  "license": "ISC",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "app/bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "2.2.4",
+    "bootstrap": "3.3.7",
+    "font-awesome": "fontawesome#4.6.3",
+    "react": "15.3.2",
+    "babel": "5.8.38"
+  }
+}
