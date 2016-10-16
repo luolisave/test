@@ -22,7 +22,7 @@ window.Inbox = React.createClass({
             </ul>
           </div>
           <div className="col-sm-10">
-            {this.props.children || "Welcome to your Inbox. Current Inbox is empty!"}
+            {this.props.children || "Welcome to your Inbox. Current Message is empty!"}
           </div>
           
           
