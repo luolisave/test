@@ -1,7 +1,11 @@
 socket programming
 ==================
 
-https://www.tutorialspoint.com/unix_sockets/socket_server_example.htm
+URL 
+----
+>    https://www.tutorialspoint.com/unix_sockets/socket_server_example.htm
+>
+>    https://www.tutorialspoint.com/unix_sockets/socket_client_example.htm
 
 files
 ------
