@@ -1,3 +1,12 @@
+/**
+* @Author: Li Luo
+* @Date:   2016-12-14T14:54:52-05:00
+* @Last modified by:   Li Luo
+* @Last modified time: 2016-12-14T15:10:11-05:00
+*/
+
+
+
 var express = require('express');
 var app = require('express')();
 var http = require('http').Server(app);
@@ -7,7 +16,7 @@ var io = require('socket.io')(http);
 //    res.sendFile(__dirname + '/index.html');
 //});
 
-app.use(express.static(__dirname + '/public'));
+app.use(express.static(__dirname + '/public_html'));
 
 var histories = [];
 io.on('connection', function (socket) {

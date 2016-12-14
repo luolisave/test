@@ -1,0 +1,32 @@
+<form onsubmit="return false;">
+<div class="row">
+  <div class="col-sm-12">
+    <h3>Note:
+      <span class="pull-right"><a href="#/main/settings">settings</a></span>
+    </h3>
+  </div>
+  <div class="col-sm-12">
+          <input class="form-control" type="hidden" ng-model="liNote.item.meta" placeholder="url">
+  </div>
+    <div class="col-sm-12">
+
+            <textarea
+              class="form-control"
+              style="min-height:480px;"
+              ng-model="liNote.item.note"
+              ></textarea>
+            <br />
+
+
+    </div>
+    <div class="col-sm-4"></div>
+    <div class="col-sm-4"></div>
+    <div class="col-sm-4"><button id="btnSave" class="btn btn-primary btn-block" ng-click="liNote.click.saveNote()">Save Note</button></div>
+</div>
+
+<div class="row">
+  <div class="col-sm-12">
+
+  </div>
+</div>
+</form>

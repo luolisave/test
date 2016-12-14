@@ -1,0 +1,17 @@
+<div class="row">
+    <div class="col-sm-12">
+        <h3>Take a notes here:</h3>
+        <form onsubmit="return false;">
+            <textarea
+              class="form-control"
+              style="min-height:480px;"
+              ng-model="note"
+              ></textarea>
+            <br />
+
+        </form>
+    </div>
+    <div class="col-sm-4"></div>
+    <div class="col-sm-4"><button id="btnSave" class="btn btn-primary btn-block" ng-click="clickSave()">Save</button></div>
+    <div class="col-sm-4"><button id="btnSave" class="btn btn-primary btn-block" ng-click="linote.click.saveNote()">Save Note(PHP)</button></div>
+</div>
