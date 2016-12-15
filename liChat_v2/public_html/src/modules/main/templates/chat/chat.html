@@ -19,7 +19,7 @@
                     <th class="col-xs-11"></th>
                 </tr>
                 <tr ng-repeat="(key, value) in messages track by $index">
-                    <td><span ng-bind="value.name"></span><b> : </b></td>
+                    <td><span><span ng-bind="value.name"></span><b> : </b></span></td>
                     <td><span ng-bind="value.message"></span></td>
                 </tr>
             </table>
