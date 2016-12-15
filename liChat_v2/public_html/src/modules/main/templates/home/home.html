@@ -1,17 +1,9 @@
 <div class="row">
-    <div class="col-sm-12">
-        <h3>Take a notes here:</h3>
-        <form onsubmit="return false;">
-            <textarea
-              class="form-control"
-              style="min-height:480px;"
-              ng-model="note"
-              ></textarea>
-            <br />
-
-        </form>
+    <div class="col-sm-4" >
+        <div style="height:196px; background-color: gray; padding: 8px;">
+            <h2 style="margin-top:8px">Out Door <span>(AM2320)</span></h2>
+            <p><label style="width:100px;">Update at: </label><span ng-bind="am2320.update_date"></span></p>
+            <p><label style="width:100px;">Data: </label><span ng-bind="am2320.data"></span></p>
+        </div>
     </div>
-    <div class="col-sm-4"></div>
-    <div class="col-sm-4"><button id="btnSave" class="btn btn-primary btn-block" ng-click="clickSave()">Save</button></div>
-    <div class="col-sm-4"><button id="btnSave" class="btn btn-primary btn-block" ng-click="linote.click.saveNote()">Save Note(PHP)</button></div>
 </div>
