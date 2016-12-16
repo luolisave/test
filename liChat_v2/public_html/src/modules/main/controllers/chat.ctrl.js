@@ -2,7 +2,7 @@
 * @Author: Li Luo
 * @Date:   2016-11-07T15:52:16-05:00
 * @Last modified by:   Li Luo
-* @Last modified time: 2016-12-15T10:20:49-05:00
+* @Last modified time: 2016-12-16T10:39:56-05:00
 */
 
 
@@ -38,6 +38,8 @@ liApp.controller(
               $scope.messages = [];
           }
 
+
+
           $scope.init = function(){
               $scope.myName = $cookies.get("myName"); //getObject(key);
               socket = io();
@@ -46,8 +48,10 @@ liApp.controller(
 
               socket.on('load history', function (histories) {
                   $scope.messages = histories;
-                  $scope.$apply();
-                  window.scrollTo(0, document.body.scrollHeight);
+                  $scope.$apply(function(){
+                      $('.chat_msg_div').scrollTop(10000000);
+                  });
+                  $('.chat_msg_div').scrollTop(10000000);
               });
 
               socket.on('chat message', function (msg) {
@@ -55,9 +59,14 @@ liApp.controller(
                       $scope.myMessage = "";
                   }
                   $scope.messages.push(msg);
-                  $scope.$apply();
+                  $scope.$apply(function(){
+                      //$(".chat_msg_div").scrollTop($(".chat_msg_div").scrollHeight);
+                      $('.chat_msg_div').scrollTop(10000000);
+                  });
+
                   console.log("$scope.messages = ", $scope.messages);
               });
+
           };
 
           $scope.init();

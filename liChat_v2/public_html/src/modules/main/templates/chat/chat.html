@@ -12,15 +12,19 @@
 </div>
 <div class="row">
     <div class="col-xs-12">
-        <div style="overflow: auto; height:300px;">
+        <div class="chat_msg_div" style="overflow: auto; height:300px; border:solid gray; margin-top:8px; margin-bottom:8px;">
             <table class="table table-strip">
-                <tr>
+                <!-- <tr>
                     <th class="col-xs-1"></th>
                     <th class="col-xs-11"></th>
-                </tr>
+                </tr> -->
                 <tr ng-repeat="(key, value) in messages track by $index">
                     <td><span><span ng-bind="value.name"></span></span></td>
                     <td><span ng-bind="value.message"></span></td>
+                </tr>
+                <tr>
+                    <td  class="col-xs-1"></td>
+                    <td  class="col-xs-11"></td>
                 </tr>
             </table>
         </div>
