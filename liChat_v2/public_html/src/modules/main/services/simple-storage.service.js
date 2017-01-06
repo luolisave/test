@@ -2,7 +2,7 @@
 * @Author: Li Luo
 * @Date:   2016-12-15T10:48:36-05:00
 * @Last modified by:   Li Luo
-* @Last modified time: 2017-01-05T21:20:47-05:00
+* @Last modified time: 2017-01-05T22:03:36-05:00
 */
 
 
@@ -15,8 +15,8 @@ liApp.factory(
         '$q','$http','alertify',
         function($q, $http, alertify) {
             var service = {};
-            service.getNote = function(hash){
-                    var apiUrl = 'http://api.lluo.ca/storage/s3/?passcode=pass1234&username=kbt&hash='+hash+'&stype=sqlite&ctype=';
+            service.getNote = function(hash, passcode){
+                    var apiUrl = 'http://api.lluo.ca/storage/s3/?passcode='+passcode+'&username=kbt&hash='+hash+'&stype=sqlite&ctype=';
                     var defer = $q.defer();
                     $http.get(apiUrl).then(
                         function (response) {
@@ -29,8 +29,8 @@ liApp.factory(
                     return defer.promise;
             };
 
-            service.setNote = function(hash, data){
-                    var apiUrl = "http://api.lluo.ca/storage/s3/?passcode=pass1234&username=kbt&hash="+hash+"&stype=sqlite&ctype=";
+            service.setNote = function(hash, passcode, data){
+                    var apiUrl = "http://api.lluo.ca/storage/s3/?passcode="+passcode+"&username=kbt&hash="+hash+"&stype=sqlite&ctype=";
                     var defer = $q.defer();
                     $http.post(apiUrl, data).then(
                         function (response) {

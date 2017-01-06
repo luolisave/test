@@ -2,7 +2,7 @@
 * @Author: Li Luo
 * @Date:   2016-11-07T15:52:16-05:00
 * @Last modified by:   Li Luo
-* @Last modified time: 2017-01-05T21:46:59-05:00
+* @Last modified time: 2017-01-05T22:19:55-05:00
 */
 
 
@@ -14,12 +14,14 @@
 
 liApp.controller(
     'mainNoteController',
-    ['$scope', '$rootScope', 'alertify', 'UserService', 'SimpleStorageService',
-        function ($scope, $rootScope, alertify, UserService, SimpleStorageService) {
+    ['$scope', '$rootScope', '$stateParams', 'alertify', 'UserService', 'SimpleStorageService',
+        function ($scope, $rootScope, $stateParams, alertify, UserService, SimpleStorageService) {
           // ====================================================================================================== sop
+          $scope.params = $stateParams; //$scope.params.noteHash
+
           $scope.saveNote = function(){
               SimpleStorageService
-                .setNote("lisexpress_note_default", $scope.note)
+                .setNote($scope.params.noteHash,"pass1234", $scope.note)
                 .then(
                     function(rs){
                         console.log("rs", rs);
@@ -34,9 +36,15 @@ liApp.controller(
 
           $scope.init = function(){
 
-              SimpleStorageService.getNote("lisexpress_note_default").then(function(rs){
-                  console.log("getNote rs=",rs);
-                  $scope.note = rs.data;
+              SimpleStorageService.getNote($scope.params.noteHash, "pass1234").then(function(rs){
+                  if(!rs.status || rs.status === 0){
+                      alertify.error("error: "+rs.info);
+                  }else{
+                      alertify.success("retrived");
+                      console.log("getNote rs=",rs);
+                      $scope.note = rs.data;
+                  }
+
               });
           };
 

@@ -2,7 +2,7 @@
 * @Author: Li Luo
 * @Date:   2016-12-14T15:20:38-05:00
 * @Last modified by:   Li Luo
-* @Last modified time: 2016-12-15T13:14:54-05:00
+* @Last modified time: 2017-01-05T22:14:59-05:00
 */
 
 
@@ -51,7 +51,7 @@ liApp.config(['$routeProvider', '$stateProvider', '$urlRouterProvider', '$transl
             .state(
                 'main.note',
                 {
-                    url:         '/note',
+                    url:         '/note/:noteHash',
                     templateUrl: 'src/modules/main/templates/note/note.html',
                     controller:  'mainNoteController'
                 }
