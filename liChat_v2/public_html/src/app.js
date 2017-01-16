@@ -57,6 +57,14 @@ liApp.config(['$routeProvider', '$stateProvider', '$urlRouterProvider', '$transl
                 }
             )
             .state(
+                'main.thread',
+                {
+                    url:         '/thread/:noteHash',
+                    templateUrl: 'src/modules/main/templates/thread/thread.html',
+                    controller:  'mainThreadController'
+                }
+            )
+            .state(
                 'main.chat',
                 {
                     url:         '/chat',
