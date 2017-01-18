@@ -1,4 +1,5 @@
 <form onsubmit="return false;">
+    {{currentDateTimeStr}}
 <div class="row">
     <div class="row">
         <div class="col-xs-3">
@@ -40,17 +41,21 @@
                 ng-model="note.content"
         ></textarea>
         <div ng-hide="flagTextareaEdit">
-            <pre ng-bind="note.content" style="font-size: x-large;"></pre>
+            <div ng-bind="note.content" style="white-space: pre; font-size: x-large;"></div>
         </div>
     </div>
 </div>
 
 <div class="row">
-  <div ng-repeat="item in note.threads" class="col-sm-12" style="border-right: solid gray 1px;">
-      <h4 style="padding-left: 10px;" ><span ng-bind="item.nickname"></span><span ng-if="item.nickname && item.nickname !== ''"> :</span></h4>
-      <pre ng-bind="item.content" style="font-size: large;">
-
-        </pre>
+  <div ng-repeat="item in note.threads" class="col-sm-12" style="">
+      <div style="border: 2px solid gray; margin-top:4px; margin-left:8px;">
+          <h4 style="overflow:hidden; margin-left:8px;margin-right:8px; padding:3px; background-color:#AAA;">
+              <span ng-bind="item.nickname"></span><span ng-if="item.nickname && item.nickname !== ''"> :</span>
+              <span class="pull-right" ng-bind="item.datetime"></span>
+          </h4>
+          <div style="margin-left:8px;margin-right:8px;white-space: pre; font-size: large;" ng-bind="item.content">
+          </div>
+      </div>
   </div>
 </div>
 <div class="row" ng-hide="flagReply">

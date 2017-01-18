@@ -2,14 +2,9 @@
 * @Author: Li Luo
 * @Date:   2016-11-07T15:52:16-05:00
 * @Last modified by:   Li Luo
-* @Last modified time: 2017-01-05T22:19:55-05:00
+* @Last modified time: 2017-01-18T15:43:29-05:00
 */
 
-
-
-/**
- * Created by LLuo on 09/09/2016.
- */
 "use strict";
 
 liApp.controller(
@@ -46,10 +41,14 @@ liApp.controller(
                     }
                 );
           };
-
+          var d = new Date();
+          $scope.currentDateTimeStr = d.getUTFullYear() +"-"+ (d.getMonth()+1) +"-" + d.getDate() + " " + d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();//d.getTime();
             $scope.saveThreads = function(){
                 console.log("thread", $scope.thread);
                 if($scope.thread.nickname && $scope.thread.nickname != "" && $scope.thread.content && $scope.thread.content != ""){
+                    var currentDateTime = Date();
+                    $scope.currentDateTimeStr = currentDateTime.getYear();
+
                     $scope.note.threads.push(angular.copy($scope.thread));
                     $scope.saveNote();
                 }else{
