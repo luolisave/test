@@ -2,7 +2,7 @@
 * @Author: Li Luo
 * @Date:   2016-11-07T15:52:16-05:00
 * @Last modified by:   Li Luo
-* @Last modified time: 2017-01-18T16:02:54-05:00
+* @Last modified time: 2017-01-18T16:06:36-05:00
 */
 
 "use strict";
@@ -41,12 +41,14 @@ liApp.controller(
                     }
                 );
           };
-          var offset = new Date().getTimezoneOffset();
-          console.log(offset/60*-1);
+
             $scope.saveThreads = function(){
                 console.log("thread", $scope.thread);
                 if($scope.thread.nickname && $scope.thread.nickname != "" && $scope.thread.content && $scope.thread.content != ""){
-                    $scope.thread.datetime = moment().format('YYYY-MM-DD hh:mm:ss');
+                    //add time stamp
+                    var offset = new Date().getTimezoneOffset();
+                    offset = offset /60*-1;
+                    $scope.thread.datetime = moment().format('YYYY-MM-DD hh:mm:ss') + " (GTM"+ offset +")";
 
                     $scope.note.threads.push(angular.copy($scope.thread));
                     $scope.saveNote();
