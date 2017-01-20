@@ -1,0 +1,10 @@
+.th_box{
+    width: 100%;
+    margin-top: 16px;
+}
+.th_box_div{
+    min-height: 96px;
+    background-color: #DDD;
+    border-radius: 8px;
+    padding: 8px;
+}

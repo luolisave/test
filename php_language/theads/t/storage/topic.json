@@ -1,0 +1,13 @@
+{
+    "data":{
+        "title":"The title",
+        "content": "The Content",
+        "datetime":"2017-01-20 10:35:00",
+        "nickname":"Li",
+        "email":"luolisave@gmail.com"
+    },
+    "admin": {
+        "token-for-edit":"ewirjsafjdsa"
+    }
+    
+}
