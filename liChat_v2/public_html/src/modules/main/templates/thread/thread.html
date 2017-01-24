@@ -1,27 +1,30 @@
 <form onsubmit="return false;">
+    {{currentDateTimeStr}}
 <div class="row">
-    <div class="row">
-        <div class="col-xs-3">
-            <div>
-                <button type="button" class="btn btn-default " ng-click="EnableTextareaEdit()">
-                    <span ng-show="flagTextareaEdit">View Topic</span>
-                    <span ng-hide="flagTextareaEdit">Editing Topic</span>
-                </button>
+    <div class="col-sm-12">
+        <div class="row">
+            <div class="col-xs-3">
+                <div>
+                    <button type="button" class="btn btn-default " ng-click="EnableTextareaEdit()">
+                        <span ng-show="flagTextareaEdit">View Topic</span>
+                        <span ng-hide="flagTextareaEdit">Editing Topic</span>
+                    </button>
+                </div>
             </div>
-        </div>
-        <div class="col-xs-3">
-            <div>
-                <button type="button" class="btn btn-default " ng-click="init()"><i class="glyphicon glyphicon-refresh"></i></button>
+            <div class="col-xs-3">
+                <div>
+                    <button type="button" class="btn btn-default " ng-click="init()"><i class="glyphicon glyphicon-refresh"></i></button>
+                </div>
             </div>
-        </div>
-        <div class="col-xs-3">
-            <div ng-if="flagTextareaEdit">
-                <button type="button" class="btn btn-danger pull-right " ng-click="clearNote()">Delete</button>
+            <div class="col-xs-3">
+                <div ng-if="flagTextareaEdit">
+                    <button type="button" class="btn btn-danger pull-right " ng-click="clearNote()">Delete</button>
+                </div>
             </div>
-        </div>
-        <div class="col-xs-3">
-            <div ng-if="flagTextareaEdit">
-                <button type="button" class="btn btn-warning pull-right " ng-click="saveNote()">Save</button>
+            <div class="col-xs-3">
+                <div ng-if="flagTextareaEdit">
+                    <button type="button" class="btn btn-warning pull-right " ng-click="saveNote()">Save</button>
+                </div>
             </div>
         </div>
     </div>
@@ -40,22 +43,31 @@
                 ng-model="note.content"
         ></textarea>
         <div ng-hide="flagTextareaEdit">
-            <pre ng-bind="note.content" style="font-size: x-large;"></pre>
+            <div ng-bind="note.content" style="white-space: pre; font-size: x-large;"></div>
         </div>
     </div>
 </div>
 
 <div class="row">
-  <div ng-repeat="item in note.threads" class="col-sm-12" style="border-right: solid gray 1px;">
-      <h4 style="padding-left: 10px;" ><span ng-bind="item.nickname"></span><span ng-if="item.nickname && item.nickname !== ''"> :</span></h4>
-      <pre ng-bind="item.content" style="font-size: large;">
-
-        </pre>
+  <div ng-repeat="item in note.threads" class="col-sm-12" style="">
+      <div style="border: 2px solid gray; margin-top:4px; margin-left:8px;">
+          <h4 style="overflow:hidden; margin-left:8px;margin-right:8px; padding:3px; background-color:#AAA;">
+              <span ng-bind="item.nickname"></span><span ng-if="item.nickname && item.nickname !== ''"> :</span>
+              <span class="pull-right" ng-bind="item.datetime"></span>
+          </h4>
+          <div style="margin-left:8px;margin-right:8px;white-space: pre; font-size: large;" ng-bind="item.content">
+          </div>
+      </div>
   </div>
 </div>
+<div class="row">
+    <div class="col-sm-12">
+        &nbsp;
+    </div>
+</div>
 <div class="row" ng-hide="flagReply">
-    <div class="col-sm-1 pull-right">
-        <button type="button" class="btn btn-primary " ng-click="flagReply = !flagReply">Reply</button>
+    <div class="col-sm-12">
+        <button type="button" class="btn btn-primary pull-right" ng-click="flagReply = !flagReply">Reply</button>
     </div>
 </div>
     <div class="row" ng-show="flagReply">
@@ -74,6 +86,9 @@
                       style="min-height:30px; font-size: x-large;"
                       ng-model="thread.content"
             ></textarea>
+        </div>
+        <div class="col-sm-12">
+            &nbsp;
         </div>
         <div class="col-sm-12">
             <button type="button" class="btn btn-warning pull-right " ng-click="saveThreads()">Save</button>
