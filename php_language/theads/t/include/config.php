@@ -13,6 +13,9 @@ ini_set('display_errors', 'On');
 define("PROJ_NAME", 'PHP Single Thread Forum');
 define("VERSION", '0.0.1');
 
+// User may need to set passcode
+define("PASSCODE","passcode");
+
 /*
  * SECTION 0: Pre-Define
  */
@@ -36,6 +39,12 @@ if (isset($_SERVER['HTTPS'])) {
         $secure_connection = true;
     }
 }
+if(isset($_SERVER["HTTP_X_FORWARDED_PROTO"])){
+    if ($_SERVER["HTTP_X_FORWARDED_PROTO"] == "https"){
+        $secure_connection = true;
+    }
+}
+
 $request_url = dirname($_SERVER['SCRIPT_NAME']); //$_SERVER['PHP_SELF']
 if ($request_url == '/')
     $request_url = '';
@@ -44,8 +53,42 @@ if ($secure_connection == true) {
 } else {
     $pre_site_url = "http://" . $pre_site_url . $current_port . $request_url;
 }
+define("SITE_URL", $pre_site_url); 
+define("SITE_URL_FULL", $pre_site_url."?".$_SERVER['QUERY_STRING']);
+//var_dump(SITE_URL_FULL); echo "<br>";
+//var_dump($_SERVER); echo "<br>";
+// var_dump($current_port);echo "<br>";
+// var_dump($_SERVER['SERVER_PORT']);echo "<br>";
+// var_dump(SITE_URL);echo "<br>";
 
 
-//
-$threadTopic = json_decode(file_get_contents("storage/topic.json"),true);
-$threadReplies = json_decode(file_get_contents("storage/replies.json"),true);
+
+// read index.json
+$hash = empty($_GET['tid'])?"default":md5($_GET['tid']);
+
+$jsonFolderName = "storage/".$hash;
+$jsonIndexFileName = "storage/".$hash."/index.json";
+if (file_exists($jsonIndexFileName)) {
+    $threadIndex = json_decode(file_get_contents($jsonIndexFileName),true);
+}else{
+    // passcode
+    $passcode = empty($_GET['passcode'])?"":trim($_GET['passcode']);
+    if(!empty(PASSCODE)){
+        if($passcode != PASSCODE){
+            exit("passcode not match!");
+        }
+    }
+
+    if (!is_dir($jsonFolderName)) {
+        mkdir($jsonFolderName);
+    }
+    
+    file_put_contents($jsonIndexFileName,'{"replies":[]}');
+    $threadIndex = json_decode(file_get_contents($jsonIndexFileName),true);
+}
+
+
+
+// if(!empty($_GET["method"])){
+//     $method = trim($_GET["method"]);
+// }

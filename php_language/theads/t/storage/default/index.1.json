@@ -1,0 +1,18 @@
+{
+    "replies" : [
+            {
+                "title":"Title should be the first line.",
+                "summary":"Summary of the content. if too long, should save to seperate file and record the file name in next line field.",
+                "file":"",
+                "cat":"tech",
+                "tag":""
+            },
+            {
+                "title":"Title 2",
+                "summary":"Summary of the content. <br /> if too long, should save to seperate file and record the file name in next line field.",
+                "file":"",
+                "cat":"tech",
+                "tag":""
+            }
+        ]
+}
