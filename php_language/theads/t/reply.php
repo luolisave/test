@@ -3,6 +3,8 @@ include "include/config.php";
 
 include 'include/header.php';
 
+//
+
 
 if($_POST){
     if(!empty($_POST["replyThread"])){
@@ -56,6 +58,13 @@ if($_POST){
            }
            
             if(!empty($_GET["edit"])){
+                //not allow create / edit if passcode is wrong
+                $_GET['passcode']= empty($_GET['passcode'])?"":$_GET['passcode'];
+                if(!checkPasscode($_GET['passcode'])){
+                    exit('passcode error!');
+                }
+
+                
                 if($_GET["edit"] == "topic"){
                     $editNum = 0;
                 }else{
@@ -64,6 +73,11 @@ if($_POST){
                 $threadIndex["replies"][$editNum] = $tmpArray;
             }else{
                 array_push($threadIndex["replies"], $tmpArray);
+                if(!getThreadConfig()){
+                    $_POST['passcode'] = empty($_POST['passcode'])? "passcode": $_POST['passcode'];
+                    $_POST['passcode'] = trim($_POST['passcode']);
+                    file_put_contents("storage/".$hash."/config.json", '{"passcode":"'.$_POST['passcode'].'"}');
+                }
             }
             
             $jsonStr = json_encode($threadIndex);

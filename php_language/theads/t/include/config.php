@@ -13,9 +13,6 @@ ini_set('display_errors', 'On');
 define("PROJ_NAME", 'PHP Single Thread Forum');
 define("VERSION", '0.0.1');
 
-// User may need to set passcode
-define("PASSCODE","passcode");
-
 /*
  * SECTION 0: Pre-Define
  */
@@ -55,30 +52,61 @@ if ($secure_connection == true) {
 }
 define("SITE_URL", $pre_site_url); 
 define("SITE_URL_FULL", $pre_site_url."?".$_SERVER['QUERY_STRING']);
-//var_dump(SITE_URL_FULL); echo "<br>";
-//var_dump($_SERVER); echo "<br>";
-// var_dump($current_port);echo "<br>";
-// var_dump($_SERVER['SERVER_PORT']);echo "<br>";
-// var_dump(SITE_URL);echo "<br>";
 
 
 
-// read index.json
+
+
 $hash = empty($_GET['tid'])?"default":md5($_GET['tid']);
 
+
+
+// function: read config.json
+function getThreadConfig(){
+    $hash = empty($_GET['tid'])?"default":md5($_GET['tid']);
+    $jsonConfigFileName = "storage/".$hash."/config.json";
+    $jsonConfig = array();
+    if (file_exists($jsonConfigFileName)) {
+        $jsonConfig = json_decode(file_get_contents($jsonConfigFileName),true);
+        return $jsonConfig;
+    }else{
+        return false;
+    }
+}
+
+// function: check password
+function checkPasscode($passcode){
+    $threadConfig = getThreadConfig();
+    if(!empty($threadConfig)){
+        $passcode = empty($passcode)?"":trim($passcode);
+        if($passcode != $threadConfig['passcode']){
+            echo "!!!!! passcode not match! \n<br>";
+            return false;
+            //exit("passcode not match!");
+        }else{
+            return true;
+        }
+    }else{
+        echo "!!!!! configure file config.json not found! \n<br>";
+        return false;
+        //exit("configure file config.json not found!");
+    }
+    
+}
+
+if(!empty($_GET['edit'])){
+    $_GET['passcode']= empty($_GET['passcode'])?"":$_GET['passcode'];
+    if(!checkPasscode($_GET['passcode'])){
+        exit('passcode error!');
+    }
+}
+
+// read index.json (create if not exist)
 $jsonFolderName = "storage/".$hash;
 $jsonIndexFileName = "storage/".$hash."/index.json";
 if (file_exists($jsonIndexFileName)) {
     $threadIndex = json_decode(file_get_contents($jsonIndexFileName),true);
 }else{
-    // passcode
-    $passcode = empty($_GET['passcode'])?"":trim($_GET['passcode']);
-    if(!empty(PASSCODE)){
-        if($passcode != PASSCODE){
-            exit("passcode not match!");
-        }
-    }
-
     if (!is_dir($jsonFolderName)) {
         mkdir($jsonFolderName);
     }
@@ -86,8 +114,6 @@ if (file_exists($jsonIndexFileName)) {
     file_put_contents($jsonIndexFileName,'{"replies":[]}');
     $threadIndex = json_decode(file_get_contents($jsonIndexFileName),true);
 }
-
-
 
 // if(!empty($_GET["method"])){
 //     $method = trim($_GET["method"]);

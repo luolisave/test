@@ -1,4 +1,14 @@
 <main class="container">
+    
+    <?php
+        $_GET['passcode']= empty($_GET['passcode'])?"":$_GET['passcode'];
+        if(!empty($_GET['passcode'])){
+            if(!checkPasscode($_GET['passcode'])){
+                exit('passcode error!');
+            }
+        }
+        
+    ?>
 
     <!-- replies -->
     <?php 
@@ -16,11 +26,30 @@
         <div class="col-xs-12 th_box">
             <div class="th_box_div">
                 <?php if($key > 0){ ?>
-                <div style="float:left; width:128px; min-height: 128px; margin-right:8px; background-color:#FBB; border-radius: 8px; overflow:hidden;">
+                <div style="float:left; width:128px; min-height: 128px; margin-right:8px; background-color:#BFF; border-radius: 8px; overflow:hidden;">
+                    
                     <div >
-                        <img style="margin-left:16px;margin-top:8px;" height="64" width="64" src="icon.png">
+                        <?php 
+                            if(!empty($value["nickname"])){
+                                $th_nickname = trim($value["nickname"]);
+                                $th_nickname_1st = substr($th_nickname, 0, 1);
+                                //echo "__". $th_nickname_1st . "__";
+                                $th_nickname_png = "speech-balloon-orange-{$th_nickname_1st}256.png";
+                            
+                        ?>
+                            <img style="margin-left:16px;margin-top:8px;" height="64" width="64" src="images/<?php echo $th_nickname_png; ?>">
+                            
+                        <?php
+                            }else{//speech-balloon-orange-a256.png
+                        ?>
+                            <img style="margin-left:16px;margin-top:8px;" height="64" width="64" src="icon.png">
+                        <?php
+                            }//speech-balloon-orange-a256.png
+                        ?>
+                        
                         <div style="float:right; padding-right:4px"><b><?php echo '#'.$key; ?></b></div>
                     </div>
+                    
                     <div style="text-align:center;">
                         <span style="cursor:pointer;margin-left:4px" title="<?php if(!empty($value["nickname"]))echo $value["nickname"]; ?>"><?php if(!empty($value["nickname"]))echo $value["nickname"]; ?></span>
                     </div>
@@ -33,28 +62,63 @@
                         <span style="cursor:pointer;margin-left:4px;font-size:12px;" title="<?php if(!empty($value["datetime"]))echo $value["datetime"]; ?>"><?php if(!empty($value["datetime"]))echo $value["datetime"]; ?></span>
                     </div>
                 </div>
+                <?php }else{ ?>
+                <div style="float:right; width:128px; min-height: 128px; margin-right:8px;  border-radius: 8px; overflow:hidden;">
+                    
+                    <div style="text-align:center; padding:8px;">
+                        <?php 
+                            if(empty($_GET['pid'])){
+                                $_GET['pid'] = "default";
+                            }
+                            if(!empty($_GET['passcode']) && empty($_GET['edit'])){ 
+                                
+                                $_GET['passcode'] = trim($_GET['passcode']);
+                        ?>
+                                <a target="_blank" class="btn btn-primary" href="<?php echo "?tid={$_GET['tid']}&passcode={$_GET['passcode']}&edit=topic"; ?>">Edit Topic</a>
+                        <?php }else if(!empty($_GET['passcode']) && !empty($_GET['edit'])){ ?>
+                                <a class="btn btn-info" href="<?php echo "?tid={$_GET['tid']}&passcode={$_GET['passcode']}"; ?>">Return</a>
+                        <?php } ?>
+                    </div>
+                    
+                </div>
                 <?php } ?>
                 
-                <div>
-                <?php if(!empty($value["title"])){ ?>
-                    <?php if($key == 0){ ?>
-                    <h1><?php echo $value["title"]; ?></h1>
-                    <?php }else{ ?>
-                    <h3><?php echo $value["title"]; ?></h3>
+                <div style="float:right;">
+                    <?php 
+                            if(empty($_GET['pid'])){
+                                $_GET['pid'] = "default";
+                            }
+                            if(!empty($_GET['passcode']) && empty($_GET['edit'])){ 
+                                $_GET['passcode'] = trim($_GET['passcode']);
+                                if(!empty($key)){
+                        ?>
+                        <a target="_blank" style="margin:4px;" class="btn btn-primary" href="<?php echo "?tid={$_GET['tid']}&passcode={$_GET['passcode']}&edit={$key}"; ?>">Edit <?php echo '#'.$key; ?></a>
+                        <?php } ?>
+                    <?php }else if(!empty($_GET['passcode']) && !empty($_GET['edit']) && $_GET['edit'] != 'topic'){ ?>
+                            <a class="btn btn-info" href="<?php echo "?tid={$_GET['tid']}&passcode={$_GET['passcode']}"; ?>">Return</a>
                     <?php } ?>
-                <?php } ?>
+                </div>
                 
-                <?php 
-                    if(empty($value["file"])){
-                        echo $value["summary"]; 
-                    }else{
-                        //echo " -- should put file content here. -- ";
-                        $threadThread = json_decode(file_get_contents("storage/".$hash."/".$value["file"]),true);
-                        if(!empty($threadThread["data"]["content"])){
-                            echo $threadThread["data"]["content"];
+                <div class="reply_content_div">
+                    <?php if(!empty($value["title"])){ ?>
+                        <?php if($key == 0){ ?>
+                        <h1><?php echo $value["title"]; ?></h1>
+                        <?php }else{ ?>
+                        <h3><?php echo $value["title"]; ?></h3>
+                        <?php } ?>
+                    <?php } ?>
+                    
+                    <?php 
+                        if(empty($value["file"])){
+                            echo $value["summary"]; 
+                        }else{
+                            //echo " -- should put file content here. -- ";
+                            $threadThread = json_decode(file_get_contents("storage/".$hash."/".$value["file"]),true);
+                            if(!empty($threadThread["data"]["content"])){
+                                echo $threadThread["data"]["content"];
+                            }
                         }
-                    }
-                ?>
+                    ?>
                 </div>
             </div>
         </div>
@@ -112,7 +176,7 @@
     </script>
     
     
-    <form method="post" name="replyForm" action="reply.php<?php $tid = empty($_GET['tid'])?'':trim($_GET['tid']); echo empty($tid)?'':'?tid='.$tid; ?><?php echo empty($_GET['edit'])?'':'&edit='.$_GET['edit']; ?>" onsubmit="return recordCookies()">
+    <form method="post" name="replyForm" action="reply.php<?php $tid = empty($_GET['tid'])?'':trim($_GET['tid']); echo empty($tid)?'':'?tid='.$tid; ?><?php echo empty($_GET['passcode'])?'':'&passcode='.$_GET['passcode']; ?><?php echo empty($_GET['edit'])?'':'&edit='.$_GET['edit']; ?>" onsubmit="return recordCookies()">
         <input class="form-control" type="hidden" name="replyThread" value="replyThread" />
         <input class="form-control" type="hidden" name="siteUrlFull" value="<?php echo SITE_URL_FULL; ?>" />
         
@@ -158,11 +222,15 @@
                                 <?php //*/ ?>
                             </td>
                             <td>
-                                
+                                <?php
+                                    if(!getThreadConfig()){
+                                ?>
+                                <input class="form-control" style="color:red; background-color:pink;" name="passcode" placeholder="passcode" value="passcode" />
+                                <?php } ?>
                             </td>
                         </tr>
                         <tr>
-                            <td colspan="3">
+                            <td colspan="4">
                                 
                                 <input class="form-control" name="title" placeholder="Title" value="<?php 
                                     if(!empty($_GET['edit']) && !empty($v["title"])){
@@ -172,11 +240,16 @@
                             </td>
                         </tr>
                         <tr>
-                            <td colspan="3">
+                            <td colspan="4">
                                 <textarea style="height:180px;" class="form-control" name="content" id="replyArea"><?php 
-                                if(!empty($_GET['edit']) && !empty($threadThread["data"]["content"])){
-                                    echo $threadThread["data"]["content"];
+                                if(!empty($_GET['edit'])){
+                                    if(!empty($threadThread["data"]["content"])){
+                                        echo $threadThread["data"]["content"];
+                                    }else{
+                                        echo $v["summary"]; 
+                                    }
                                 }
+                                
                                 ?></textarea>
                             </td>
                         </tr>

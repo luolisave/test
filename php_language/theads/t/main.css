@@ -22,3 +22,8 @@ img {
     margin:8px;
 }
 
+.reply_content_div{
+    overflow: auto;
+    word-wrap: break-word;
+}
+
