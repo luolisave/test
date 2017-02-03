@@ -32,6 +32,7 @@
                         <?php 
                             if(!empty($value["nickname"])){
                                 $th_nickname = trim($value["nickname"]);
+                                $th_nickname = strtolower($th_nickname);
                                 $th_nickname_1st = substr($th_nickname, 0, 1);
                                 //echo "__". $th_nickname_1st . "__";
                                 $th_nickname_png = "speech-balloon-orange-{$th_nickname_1st}256.png";
