@@ -7,6 +7,9 @@
                 exit('passcode error!');
             }
         }
+        if(empty($_GET['tid'])){
+            $_GET['tid']="";
+        }
         
     ?>
 
@@ -74,6 +77,7 @@
                             if(!empty($_GET['passcode']) && empty($_GET['edit'])){ 
                                 
                                 $_GET['passcode'] = trim($_GET['passcode']);
+                                
                         ?>
                                 <a target="_blank" class="btn btn-primary" href="<?php echo "?tid={$_GET['tid']}&passcode={$_GET['passcode']}&edit=topic"; ?>">Edit Topic</a>
                         <?php }else if(!empty($_GET['passcode']) && !empty($_GET['edit'])){ ?>
@@ -177,7 +181,7 @@
     </script>
     
     
-    <form method="post" name="replyForm" action="reply.php<?php $tid = empty($_GET['tid'])?'':trim($_GET['tid']); echo empty($tid)?'':'?tid='.$tid; ?><?php echo empty($_GET['passcode'])?'':'&passcode='.$_GET['passcode']; ?><?php echo empty($_GET['edit'])?'':'&edit='.$_GET['edit']; ?>" onsubmit="return recordCookies()">
+    <form method="post" name="replyForm" action="reply.php<?php $tid = empty($_GET['tid'])?'':trim($_GET['tid']); echo empty($tid)?'?tid=':'?tid='.$tid; ?><?php echo empty($_GET['passcode'])?'':'&passcode='.$_GET['passcode']; ?><?php echo empty($_GET['edit'])?'':'&edit='.$_GET['edit']; ?>" onsubmit="return recordCookies()">
         <input class="form-control" type="hidden" name="replyThread" value="replyThread" />
         <input class="form-control" type="hidden" name="siteUrlFull" value="<?php echo SITE_URL_FULL; ?>" />
         
@@ -194,7 +198,7 @@
                         
                         $v = $threadIndex["replies"][$editNumber];
                         if(empty($v["file"])){
-                            echo $v["summary"]; 
+                            //echo $v["summary"]; 
                         }else{
                             $threadThread = json_decode(file_get_contents("storage/".$hash."/".$v["file"]),true);
                         }
