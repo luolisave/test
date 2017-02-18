@@ -113,6 +113,9 @@ if (file_exists($jsonIndexFileName)) {
     
     file_put_contents($jsonIndexFileName,'{"replies":[]}');
     $threadIndex = json_decode(file_get_contents($jsonIndexFileName),true);
+    // $threadIndex = array(
+    //         "replies" => array()
+    //     );
 }
 
 // if(!empty($_GET["method"])){
