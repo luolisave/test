@@ -1,0 +1,36 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Three.js 101</title>
+  <!--  Simple reset to delete the margins  -->
+  <style>
+    body { margin: 0; }
+    canvas { width: 100%; height: 100% }
+  </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!--  Three.js CDN  -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r83/three.min.js"></script>
+  
+  
+</head>
+<body>
+  <div style="background-color:gray;">
+    <div id="threejs_main_window" style="float:left;height:550px; width:800px;"></div>
+    <div style="float:left;">
+      <button onclick="zoomIn()">zoom in</button> &nbsp; <button onclick="zoomOut()">zoom out</button>
+      <br />
+      <button onclick="camXPlus()">Cam x++</button> &nbsp; <button onclick="camXMinus()">Cam x--</button>
+      <br />
+      <button onclick="camYPlus()">Cam y++</button> &nbsp; <button onclick="camYMinus()">Cam y--</button>
+      <br />
+      <button onclick="camZPlus()">Cam z++</button> &nbsp; <button onclick="camZMinus()">Cam z--</button>
+    </div>
+  </div>
+  
+  <!--  Our code  -->
+  <script src="data.js"></script>
+  
+  <script src="app.js"></script>
+  <script src="control.js"></script>
+</body>
+</html>
