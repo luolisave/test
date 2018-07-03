@@ -10,18 +10,18 @@ var db = {}
 db.users = new Datastore({ filename: path.join(__dirname, 'private/nedb/users') });
 db.users.loadDatabase();
 
-var doc = { username: 'admin'
-            , role: 'admin'
-               , password: '12345'
-               , updateDate: new Date()
-               , status: 'active'
-               };
- 
-db.users.insert(doc, function (err, newDoc) {   // Callback is optional
-    console.log('inserted:', newDoc);
-  // newDoc is the newly inserted document, including its _id
-  // newDoc has no key called notToBeSaved since its value was undefined
-});
+// var doc = { username: 'admin'
+//             , role: 'admin'
+//                , password: '12345'
+//                , updateDate: new Date()
+//                , status: 'active'
+//                };
+
+// db.users.insert(doc, function (err, newDoc) {   // Callback is optional
+//     console.log('inserted:', newDoc);
+//   // newDoc is the newly inserted document, including its _id
+//   // newDoc has no key called notToBeSaved since its value was undefined
+// });
 
 // app config
 app.use(bodyParser.json())
@@ -32,9 +32,14 @@ app.use('/mock', express.static(path.join(__dirname, 'public/mock')))     // app
 
 app.get('/', (req, res) => res.send('Hello World!'))
 
-app.post('/user/login', (req, res) => {
+app.post('/api/v1/user/login', (req, res) => {
+    console.log('==========> /api/v1/user/login');
     console.log('req.params = ', req.params);
-    res.send('req.params');
+    console.log('req.body = ', req.body);
+    
+    res.setHeader('Content-Type', 'application/json');
+    res.send(JSON.stringify(req.body));
+    // res.send(JSON.stringify({ a: 1 }));
 });
 
 app.listen(3331, () => console.log('Example app listening on port 3331!'))
