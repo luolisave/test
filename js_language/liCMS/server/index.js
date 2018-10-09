@@ -46,6 +46,14 @@ app.post('/api/v1/user/login', (req, res) => {
     auth.login(req, res, db);
 });
 
+app.post('/api/v1/page/create', (req, res) => {
+    page.createPage(req, res, db);
+});
+
+app.get('/api/v1/page/list', (req, res) => {
+    page.listPage(req, res, db);
+});
+
 app.get('/api/v1/page/:pageId', (req, res) => {
     page.getPage(req, res, db);
 });
