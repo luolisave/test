@@ -1,25 +1,15 @@
+var auth = require('./auth');
 
 function log(req, res){
     console.log('page.log();');
 }
 
-function getToken(req, res){
-    let token = '';
-    if(req.headers.token){
-        token = req.headers.token;
-        return token;
-    }else if(req.params.token){
-        token = req.params.token;
-        return token;
-    }else{
-        return false;
-    }
-}
+
 
 function getPage(req, res, db){
-    let token = getToken(req, res);
+    auth.isloggedIn(req, res, db, function(req, res, db){
+        console.log("callback inside auth.isloggedIn();");
 
-    if(token){
         // console.log('getPage() req.params = ', req.params, '\n req.headers=', req.headers);
         if(req.params && req.params.pageId !== undefined){
             db.pages.findOne({ _id: req.params.pageId }, function (err, doc) {// If no document is found, doc is null
@@ -40,10 +30,9 @@ function getPage(req, res, db){
             res.setHeader('Content-Type', 'application/json');
             res.send(JSON.stringify({ status: 0, info: 'pageId not exist!', data:{} }));
         }
-    }else{
-        res.setHeader('Content-Type', 'application/json');
-        res.send(JSON.stringify({ status: 0, info: 'No token provided or token expired, please login again.', data:{} }));
-    }
+    });
+
+
 }
 
 

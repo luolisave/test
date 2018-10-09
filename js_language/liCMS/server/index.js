@@ -1,12 +1,12 @@
-const path = require('path')
-const express = require('express')
-const app = express()
-const bodyParser = require('body-parser')
-const jsonParser = bodyParser.json()
+const path = require('path');
+const express = require('express');
+const app = express();
+const bodyParser = require('body-parser');
+const jsonParser = bodyParser.json();
 
 // Database (nedb)
-var Datastore = require('nedb')
-var db = {}
+var Datastore = require('nedb');
+var db = {};
 db.users = new Datastore({ filename: path.join(__dirname, 'private/nedb/users') });
 db.users.loadDatabase();
 db.pages = new Datastore({ filename: path.join(__dirname, 'private/nedb/pages') });
