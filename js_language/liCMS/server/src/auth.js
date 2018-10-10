@@ -64,11 +64,12 @@ function isloggedIn(req, res, db, dbX, options, executeFunctionAfterCheck){
             res.send(JSON.stringify({ status: 0, info: 'auth: wrong passcode.', data:{} }));
         }
     }else if(options && options.method === 'null'){
-
+        console.log('auth method is: passcode.');
+        executeFunctionAfterCheck(req, res, dbX);
     }else{
         console.log('auth method not select.');
         res.setHeader('Content-Type', 'application/json');
-        res.send(JSON.stringify({ status: 0, info: 'auth method not select.', data:{} }));
+        res.send(JSON.stringify({ status: 0, info: 'auth method not valid.', data:{} }));
     }
 }
 
