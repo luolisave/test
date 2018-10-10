@@ -3,8 +3,8 @@ const jsonSize = require('json-size');
 const auth = require('./auth');
 const CONSTANTS = require('./const');
 
-function getX(req, res, db, dbX){
-    auth.isloggedIn(req, res, db, dbX, function(req, res, dbX){
+function getX(req, res, db, dbX, options){
+    auth.isloggedIn(req, res, db, dbX, options, function(req, res, dbX){
         console.log("callback inside auth.isloggedIn();");
         // console.log('getX() req.params = ', req.params, '\n req.headers=', req.headers);
         if(req.params && req.params.xId !== undefined){
@@ -28,8 +28,8 @@ function getX(req, res, db, dbX){
     });
 }
 
-function listX(req, res, db, dbX){
-    auth.isloggedIn(req, res, db, dbX, function(req, res, dbX){
+function listX(req, res, db, dbX, options){
+    auth.isloggedIn(req, res, db, dbX, options, function(req, res, dbX){
         console.log('listPage() req.params = ', req.params); // , '\n req.headers=', req.headers
         dbX.find({type:'page'}, function (err, docs){
             if(!err){
@@ -47,8 +47,8 @@ function listX(req, res, db, dbX){
     });
 }
 
-function createX(req, res, db, dbX){
-    auth.isloggedIn(req, res, db, dbX, function(req, res, dbX){
+function createX(req, res, db, dbX, options){
+    auth.isloggedIn(req, res, db, dbX, options, function(req, res, dbX){
         let pageObj = req.body;
         let jsonSizeInBytes = jsonSize(pageObj);
         console.log('--------->',pageObj, ' jsonSizeInBytes=',jsonSizeInBytes);
@@ -79,8 +79,8 @@ function createX(req, res, db, dbX){
     });
 }
 
-function updateX(req, res, db, dbX){
-    auth.isloggedIn(req, res, db, dbX, function(req, res, dbX){
+function updateX(req, res, db, dbX, options){
+    auth.isloggedIn(req, res, db, dbX, options, function(req, res, dbX){
         let pageObj = req.body;
         // console.log('--------->',pageObj);
         if(req.params && req.params.xId !== undefined) {
@@ -115,8 +115,8 @@ function updateX(req, res, db, dbX){
     });
 }
 
-function delX(req, res, db, dbX){
-    auth.isloggedIn(req, res, db, dbX, function(req, res, dbX){
+function delX(req, res, db, dbX, options){
+    auth.isloggedIn(req, res, db, dbX, options, function(req, res, dbX){
         if(req.params && req.params.xId !== undefined) {
             dbX.remove({_id:req.params.xId},false,function(err, numRemoved){
                 if(err){
