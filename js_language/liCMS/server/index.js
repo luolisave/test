@@ -54,8 +54,16 @@ app.get('/api/v1/page/list', (req, res) => {
     page.listPage(req, res, db);
 });
 
+app.patch('/api/v1/page/:pageId', (req, res) => {
+    page.updatePage(req, res, db);
+});
+
 app.get('/api/v1/page/:pageId', (req, res) => {
     page.getPage(req, res, db);
+});
+
+app.delete('/api/v1/page/:pageId', (req, res) => {
+    page.delPage(req, res, db);
 });
 
 app.listen(3333, () => console.log('LiCMS server listening on port 3333!'));
