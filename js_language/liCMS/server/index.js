@@ -11,11 +11,14 @@ db.users = new Datastore({ filename: path.join(__dirname, 'private/nedb/users') 
 db.users.loadDatabase();
 db.pages = new Datastore({ filename: path.join(__dirname, 'private/nedb/pages') });
 db.pages.loadDatabase();
+db.mocks = new Datastore({ filename: path.join(__dirname, 'private/nedb/mocks') });
+db.mocks.loadDatabase();
 
 // import modules
 var auth = require('./src/auth');
 var user = require('./src/user');
 var page = require('./src/page');
+var mock = require('./src/mock');
 
 
 // app config
@@ -25,6 +28,7 @@ app.use(bodyParser.json());
 app.use('/', express.static(path.join(__dirname, 'public'))); // app.use(express.static('public'));
 page.appRoute(app, db);
 user.appRoute(app, db);
+mock.appRoute(app, db);
 
 // Start app
 app.listen(3333, () => console.log('LiCMS server listening on port 3333!'));

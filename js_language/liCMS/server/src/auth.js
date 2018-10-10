@@ -21,6 +21,9 @@ function getPasscode(req, res){
     if(req.headers.passcode){
         passcode = req.headers.passcode;
         return passcode;
+    }else if(req.query.passcode){
+        passcode = req.query.passcode;
+        return passcode;
     }else if(req.params.passcode){
         passcode = req.params.passcode;
         return passcode;
@@ -54,10 +57,9 @@ function isloggedIn(req, res, db, dbX, options, executeFunctionAfterCheck){
             }
         });
     }else if(options && options.method === 'passcode'){
-        console.log('auth method is: passcode.');
-        //CONSTANTS.PASSCODE
         let passcode = getPasscode(req, res);
-        if(passcode === CONSTANTS.PASSCODE){
+        console.log('auth method is: passcode.');
+        if(passcode && passcode === CONSTANTS.PASSCODE){
             executeFunctionAfterCheck(req, res, dbX);
         }else{
             res.setHeader('Content-Type', 'application/json');

@@ -31,7 +31,7 @@ function getX(req, res, db, dbX, options){
 function listX(req, res, db, dbX, options){
     auth.isloggedIn(req, res, db, dbX, options, function(req, res, dbX){
         console.log('listPage() req.params = ', req.params); // , '\n req.headers=', req.headers
-        dbX.find({type:'page'}, function (err, docs){
+        dbX.find({}, function (err, docs){
             if(!err){
                 res.setHeader('Content-Type', 'application/json');
                 if(docs){
