@@ -6,6 +6,7 @@ function log(req, res){
     console.log('page.log();');
 }
 
+
 function getPage(req, res, db){
     auth.isloggedIn(req, res, db, function(req, res, db){
         console.log("callback inside auth.isloggedIn();");
@@ -130,7 +131,31 @@ function delPage(req, res, db){
 //     console.log('inserted:', pageDoc);
 // });
 
+
+function appRoute(app, db){
+    app.post('/api/v1/page/create', (req, res) => {
+        createPage(req, res, db);
+    });
+
+    app.get('/api/v1/page/list', (req, res) => {
+        listPage(req, res, db);
+    });
+
+    app.patch('/api/v1/page/:pageId', (req, res) => {
+        updatePage(req, res, db);
+    });
+
+    app.get('/api/v1/page/:pageId', (req, res) => {
+        getPage(req, res, db);
+    });
+
+    app.delete('/api/v1/page/:pageId', (req, res) => {
+        delPage(req, res, db);
+    });
+}
+
 module.exports.log = log;
+module.exports.appRoute = appRoute;
 module.exports.getPage = getPage;
 module.exports.listPage = listPage;
 module.exports.createPage = createPage;

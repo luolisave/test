@@ -36,34 +36,13 @@ var page = require('./src/page');
 // app config
 app.use(bodyParser.json());
 
-// Express Route
-app.use('/static', express.static(path.join(__dirname, 'public/static'))); // app.use(express.static('public'));
-app.use('/mock', express.static(path.join(__dirname, 'public/mock')));     // app.use('/static', express.static('public'))
-
-app.get('/', (req, res) => res.send('Hello World!'));
+// Express Route Configuration
+app.use('/', express.static(path.join(__dirname, 'public'))); // app.use(express.static('public'));
 
 app.post('/api/v1/user/login', (req, res) => {
     auth.login(req, res, db);
 });
 
-app.post('/api/v1/page/create', (req, res) => {
-    page.createPage(req, res, db);
-});
-
-app.get('/api/v1/page/list', (req, res) => {
-    page.listPage(req, res, db);
-});
-
-app.patch('/api/v1/page/:pageId', (req, res) => {
-    page.updatePage(req, res, db);
-});
-
-app.get('/api/v1/page/:pageId', (req, res) => {
-    page.getPage(req, res, db);
-});
-
-app.delete('/api/v1/page/:pageId', (req, res) => {
-    page.delPage(req, res, db);
-});
+page.appRoute(app, db);
 
 app.listen(3333, () => console.log('LiCMS server listening on port 3333!'));
