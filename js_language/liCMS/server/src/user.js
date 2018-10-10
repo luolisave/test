@@ -27,7 +27,9 @@ function login(req, res, db){
 }
 
 function appRoute(app, db){
-
+    app.post('/api/v1/user/login', (req, res) => {
+        login(req, res, db);
+    });
 }
 
 module.exports.appRoute = appRoute;

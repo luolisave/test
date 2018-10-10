@@ -69,7 +69,15 @@ function createPage(req, res, db){
             });
         }else{
             res.setHeader('Content-Type', 'application/json');
-            res.send(JSON.stringify({ status: 0, info: `Error: exceeding document limits. Document size must less than ${CONSTANTS.PAGE_DOC_BYTES_LIMIT} bytes.`, data:{} }));
+            res.send(
+                JSON.stringify(
+                    {
+                        status: 0,
+                        info: `Error: exceeding document limits. Document size must less than ${CONSTANTS.PAGE_DOC_BYTES_LIMIT} bytes. Change const.js PAGE_DOC_BYTES_LIMIT to increase the limits.`,
+                        data:{}
+                    }
+                )
+            );
         }
 
     });
@@ -94,7 +102,15 @@ function updatePage(req, res, db){
                 });
             }else{
                 res.setHeader('Content-Type', 'application/json');
-                res.send(JSON.stringify({ status: 0, info: `Error: exceeding document limits. Document size must less than ${CONSTANTS.PAGE_DOC_BYTES_LIMIT} bytes.`, data:{} }));
+                res.send(
+                    JSON.stringify(
+                        {
+                            status: 0,
+                            info: `Error: exceeding document limits. Document size must less than ${CONSTANTS.PAGE_DOC_BYTES_LIMIT} bytes. Change const.js PAGE_DOC_BYTES_LIMIT to increase the limits.`,
+                            data:{}
+                        }
+                    )
+                );
             }
         }else{
             res.setHeader('Content-Type', 'application/json');
