@@ -49,13 +49,19 @@ function isloggedIn(req, res, db, executeFunctionAfterCheck){
     let token = getToken(req, res);
     db.users.findOne({ token: token }, function (err, doc) {
         // console.log('doc ======>', doc);
-        timeDifference = currentUnixTime - doc.tokenTime;
-        if(timeDifference<3600*8){ //TODO: should not hard code.
-            executeFunctionAfterCheck(req, res, db);
+        if(doc){
+            timeDifference = currentUnixTime - doc.tokenTime;
+            if(timeDifference<3600*8){ //TODO: should not hard code.
+                executeFunctionAfterCheck(req, res, db);
+            }else{
+                res.setHeader('Content-Type', 'application/json');
+                res.send(JSON.stringify({ status: 0, info: 'login expired.', data:{} }));
+            }
         }else{
             res.setHeader('Content-Type', 'application/json');
-            res.send(JSON.stringify({ status: 0, info: 'login expired.', data:{} }));
+            res.send(JSON.stringify({ status: 0, info: 'not log in yet.', data:{} }));
         }
+
     });
     return true;
 }

@@ -34,13 +34,13 @@ var page = require('./src/page');
 // });
 
 // app config
-app.use(bodyParser.json())
+app.use(bodyParser.json());
 
 // Express Route
-app.use('/static', express.static(path.join(__dirname, 'public/static'))) // app.use(express.static('public')); 
-app.use('/mock', express.static(path.join(__dirname, 'public/mock')))     // app.use('/static', express.static('public'))
+app.use('/static', express.static(path.join(__dirname, 'public/static'))); // app.use(express.static('public'));
+app.use('/mock', express.static(path.join(__dirname, 'public/mock')));     // app.use('/static', express.static('public'))
 
-app.get('/', (req, res) => res.send('Hello World!'))
+app.get('/', (req, res) => res.send('Hello World!'));
 
 app.post('/api/v1/user/login', (req, res) => {
     auth.login(req, res, db);
@@ -58,4 +58,4 @@ app.get('/api/v1/page/:pageId', (req, res) => {
     page.getPage(req, res, db);
 });
 
-app.listen(3333, () => console.log('LiCMS server listening on port 3333!'))
+app.listen(3333, () => console.log('LiCMS server listening on port 3333!'));
