@@ -66,8 +66,17 @@ function createPage(req, res, db){
         //     console.log('inserted:', pageDoc);
         // });
         console.log('--------->',pageObj);
-        res.setHeader('Content-Type', 'application/json');
-        res.send(JSON.stringify({ status: 0, info: 'asfdsafdsa', data:{} }));
+        db.pages.insert(pageObj, function (err, pageDoc) {   // Callback is optional
+            if(err){
+                res.setHeader('Content-Type', 'application/json');
+                res.send(JSON.stringify({ status: 0, info: 'Error: page not inserted.', data:{} }));
+            }else{
+                res.setHeader('Content-Type', 'application/json');
+                res.send(JSON.stringify({ status: 1, info: 'new page inserted', data:pageDoc }));
+            }
+            console.log('inserted object:', pageDoc);
+        });
+
     });
 }
 

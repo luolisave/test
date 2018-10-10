@@ -1,5 +1,5 @@
 const hasha = require('hasha');
-var randomstring = require("randomstring");
+const randomstring = require("randomstring");
 
 function log(req, res){
     console.log('auth.log();');
