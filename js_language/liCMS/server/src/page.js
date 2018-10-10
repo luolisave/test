@@ -1,4 +1,6 @@
-var auth = require('./auth');
+const jsonSize = require('json-size');
+const auth = require('./auth');
+const CONSTANTS = require('./const');
 
 function log(req, res){
     console.log('page.log();');
@@ -31,7 +33,7 @@ function getPage(req, res, db){
 
 function listPage(req, res, db){
     auth.isloggedIn(req, res, db, function(req, res, db){
-        // console.log('getPage() req.params = ', req.params, '\n req.headers=', req.headers);
+        console.log('listPage() req.params = ', req.params); // , '\n req.headers=', req.headers
         db.pages.find({type:'page'}, function (err, docs){
             if(!err){
                 res.setHeader('Content-Type', 'application/json');
@@ -51,17 +53,24 @@ function listPage(req, res, db){
 function createPage(req, res, db){
     auth.isloggedIn(req, res, db, function(req, res, db){
         let pageObj = req.body;
-        // console.log('--------->',pageObj);
-        db.pages.insert(pageObj, function (err, pageDoc) {   // Callback is optional
-            if(err){
-                res.setHeader('Content-Type', 'application/json');
-                res.send(JSON.stringify({ status: 0, info: 'Error: page not inserted.', data:{} }));
-            }else{
-                res.setHeader('Content-Type', 'application/json');
-                res.send(JSON.stringify({ status: 1, info: 'new page inserted', data:pageDoc }));
-            }
-            // console.log('inserted object:', pageDoc);
-        });
+        let jsonSizeInBytes = jsonSize(pageObj);
+        console.log('--------->',pageObj, ' jsonSizeInBytes=',jsonSizeInBytes);
+        if(jsonSizeInBytes < CONSTANTS.PAGE_DOC_BYTES_LIMIT){
+            db.pages.insert(pageObj, function (err, pageDoc) {   // Callback is optional
+                if(err){
+                    res.setHeader('Content-Type', 'application/json');
+                    res.send(JSON.stringify({ status: 0, info: 'Error: page not inserted.', data:{} }));
+                }else{
+                    res.setHeader('Content-Type', 'application/json');
+                    res.send(JSON.stringify({ status: 1, info: 'new page inserted', data:pageDoc }));
+                }
+                // console.log('inserted object:', pageDoc);
+            });
+        }else{
+            res.setHeader('Content-Type', 'application/json');
+            res.send(JSON.stringify({ status: 0, info: `Error: exceeding document limits. Document size must less than ${CONSTANTS.PAGE_DOC_BYTES_LIMIT} bytes.`, data:{} }));
+        }
+
     });
 }
 
@@ -70,21 +79,26 @@ function updatePage(req, res, db){
         let pageObj = req.body;
         // console.log('--------->',pageObj);
         if(req.params && req.params.pageId !== undefined) {
-            db.pages.update({_id:req.params.pageId}, pageObj, function (err, pageDoc) {   // Callback is optional
-                if(err){
-                    res.setHeader('Content-Type', 'application/json');
-                    res.send(JSON.stringify({ status: 0, info: 'Error: page not updated.', data:{} }));
-                }else{
-                    res.setHeader('Content-Type', 'application/json');
-                    res.send(JSON.stringify({ status: 1, info: 'page updated', data:pageDoc }));
-                }
-                // console.log('inserted object:', pageDoc);
-            });
+            let jsonSizeInBytes = jsonSize(pageObj);
+            if(jsonSizeInBytes < CONSTANTS.PAGE_DOC_BYTES_LIMIT) {
+                db.pages.update({_id:req.params.pageId}, pageObj, function (err, numUpdated) {   // Callback is optional
+                    if(err){
+                        res.setHeader('Content-Type', 'application/json');
+                        res.send(JSON.stringify({ status: 0, info: 'Error: page not updated.', data:{} }));
+                    }else{
+                        res.setHeader('Content-Type', 'application/json');
+                        res.send(JSON.stringify({ status: 1, info: `Success: ${numUpdated} record updated.`, data:{} }));
+                    }
+                    // console.log('inserted object:', pageDoc);
+                });
+            }else{
+                res.setHeader('Content-Type', 'application/json');
+                res.send(JSON.stringify({ status: 0, info: `Error: exceeding document limits. Document size must less than ${CONSTANTS.PAGE_DOC_BYTES_LIMIT} bytes.`, data:{} }));
+            }
         }else{
             res.setHeader('Content-Type', 'application/json');
             res.send(JSON.stringify({ status: 0, info: 'Error: page id not provided.', data:{} }));
         }
-
     });
 }
 
