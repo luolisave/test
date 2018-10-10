@@ -1,3 +1,5 @@
+const CONSTANTS = require('./const');
+
 function getToken(req, res){
     let token = '';
     if(req.headers.token){
@@ -12,14 +14,14 @@ function getToken(req, res){
 }
 
 function isloggedIn(req, res, db, executeFunctionAfterCheck){
-    let timeDifference = 3600*24;
+    let timeDifference = 0;
     let currentUnixTime = Math.floor(new Date() / 1000);
     let token = getToken(req, res);
     db.users.findOne({ token: token }, function (err, doc) {
         // console.log('doc ======>', doc);
         if(doc){
             timeDifference = currentUnixTime - doc.tokenTime;
-            if(timeDifference<3600*8){ //TODO: should not hard code.
+            if(timeDifference < CONSTANTS.USER_LOGIN_TIMEOUT){
                 executeFunctionAfterCheck(req, res, db);
             }else{
                 res.setHeader('Content-Type', 'application/json');
