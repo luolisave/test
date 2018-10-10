@@ -7,18 +7,18 @@ function log(req, res){
 }
 
 
-function getPage(req, res, db){
-    auth.isloggedIn(req, res, db, function(req, res, db){
+function getX(req, res, db, dbX){
+    auth.isloggedIn(req, res, db, dbX, function(req, res, dbX){
         console.log("callback inside auth.isloggedIn();");
-        // console.log('getPage() req.params = ', req.params, '\n req.headers=', req.headers);
-        if(req.params && req.params.pageId !== undefined){
-            db.pages.findOne({ _id: req.params.pageId }, function (err, doc) {// If no document is found, doc is null
+        // console.log('getX() req.params = ', req.params, '\n req.headers=', req.headers);
+        if(req.params && req.params.xId !== undefined){
+            dbX.findOne({ _id: req.params.xId }, function (err, doc) {// If no document is found, doc is null
                 if(!err){
                     res.setHeader('Content-Type', 'application/json');
                     if(doc){
                         res.send(JSON.stringify({ status: 1, info: 'Success: document retrieved.', data: doc }));
                     }else{
-                        res.send(JSON.stringify({ status: 0, info: 'cannot find doc!', data:{} }));
+                        res.send(JSON.stringify({ status: 0, info: 'cannot find document!', data:{} }));
                     }
                 }else{
                     res.setHeader('Content-Type', 'application/json');
@@ -27,15 +27,15 @@ function getPage(req, res, db){
             });
         }else{
             res.setHeader('Content-Type', 'application/json');
-            res.send(JSON.stringify({ status: 0, info: 'pageId not exist!', data:{} }));
+            res.send(JSON.stringify({ status: 0, info: 'xId not exist!', data:{} }));
         }
     });
 }
 
-function listPage(req, res, db){
-    auth.isloggedIn(req, res, db, function(req, res, db){
+function listX(req, res, db, dbX){
+    auth.isloggedIn(req, res, db, dbX, function(req, res, dbX){
         console.log('listPage() req.params = ', req.params); // , '\n req.headers=', req.headers
-        db.pages.find({type:'page'}, function (err, docs){
+        dbX.find({type:'page'}, function (err, docs){
             if(!err){
                 res.setHeader('Content-Type', 'application/json');
                 if(docs){
@@ -51,13 +51,13 @@ function listPage(req, res, db){
     });
 }
 
-function createPage(req, res, db){
-    auth.isloggedIn(req, res, db, function(req, res, db){
+function createX(req, res, db, dbX){
+    auth.isloggedIn(req, res, db, dbX, function(req, res, dbX){
         let pageObj = req.body;
         let jsonSizeInBytes = jsonSize(pageObj);
         console.log('--------->',pageObj, ' jsonSizeInBytes=',jsonSizeInBytes);
         if(jsonSizeInBytes < CONSTANTS.PAGE_DOC_BYTES_LIMIT){
-            db.pages.insert(pageObj, function (err, pageDoc) {   // Callback is optional
+            dbX.insert(pageObj, function (err, pageDoc) {   // Callback is optional
                 if(err){
                     res.setHeader('Content-Type', 'application/json');
                     res.send(JSON.stringify({ status: 0, info: 'Error: page not inserted.', data:{} }));
@@ -83,14 +83,14 @@ function createPage(req, res, db){
     });
 }
 
-function updatePage(req, res, db){
-    auth.isloggedIn(req, res, db, function(req, res, db){
+function updateX(req, res, db, dbX){
+    auth.isloggedIn(req, res, db, dbX, function(req, res, dbX){
         let pageObj = req.body;
         // console.log('--------->',pageObj);
-        if(req.params && req.params.pageId !== undefined) {
+        if(req.params && req.params.xId !== undefined) {
             let jsonSizeInBytes = jsonSize(pageObj);
             if(jsonSizeInBytes < CONSTANTS.PAGE_DOC_BYTES_LIMIT) {
-                db.pages.update({_id:req.params.pageId}, pageObj, function (err, numUpdated) {   // Callback is optional
+                dbX.update({_id:req.params.xId}, pageObj, function (err, numUpdated) {   // Callback is optional
                     if(err){
                         res.setHeader('Content-Type', 'application/json');
                         res.send(JSON.stringify({ status: 0, info: 'Error: page not updated.', data:{} }));
@@ -119,10 +119,10 @@ function updatePage(req, res, db){
     });
 }
 
-function delPage(req, res, db){
-    auth.isloggedIn(req, res, db, function(req, res, db){
-        if(req.params && req.params.pageId !== undefined) {
-            db.pages.remove({_id:req.params.pageId},false,function(err, numRemoved){
+function delX(req, res, db, dbX){
+    auth.isloggedIn(req, res, db, dbX, function(req, res, dbX){
+        if(req.params && req.params.xId !== undefined) {
+            dbX.remove({_id:req.params.xId},false,function(err, numRemoved){
                 if(err){
                     res.setHeader('Content-Type', 'application/json');
                     res.send(JSON.stringify({ status: 0, info: 'Error: page not deleted.', data:{} }));
@@ -139,7 +139,7 @@ function delPage(req, res, db){
 }
 
 // let pageDoc = {
-//     pageId : 1,
+//     xId : 1,
 //     pageTitle: 'page title 1',
 //     pageContent: 'page content 1'
 // }
@@ -150,30 +150,25 @@ function delPage(req, res, db){
 
 function appRoute(app, db){
     app.post('/api/v1/page/create', (req, res) => {
-        createPage(req, res, db);
+        createX(req, res, db, db.pages);
     });
 
     app.get('/api/v1/page/list', (req, res) => {
-        listPage(req, res, db);
+        listX(req, res, db, db.pages);
     });
 
-    app.patch('/api/v1/page/:pageId', (req, res) => {
-        updatePage(req, res, db);
+    app.patch('/api/v1/page/:xId', (req, res) => {
+        updateX(req, res, db, db.pages);
     });
 
-    app.get('/api/v1/page/:pageId', (req, res) => {
-        getPage(req, res, db);
+    app.get('/api/v1/page/:xId', (req, res) => {
+        getX(req, res, db, db.pages);
     });
 
-    app.delete('/api/v1/page/:pageId', (req, res) => {
-        delPage(req, res, db);
+    app.delete('/api/v1/page/:xId', (req, res) => {
+        delX(req, res, db, db.pages);
     });
 }
 
 module.exports.log = log;
 module.exports.appRoute = appRoute;
-module.exports.getPage = getPage;
-module.exports.listPage = listPage;
-module.exports.createPage = createPage;
-module.exports.delPage = delPage;
-module.exports.updatePage = updatePage;
