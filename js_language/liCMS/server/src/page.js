@@ -14,7 +14,16 @@ function appRoute(app, db){
     });
 
     app.get('/api/v1/page/:xId', (req, res) => {
-        crud.getX(req, res, db, db.pages, {method:'token'});
+        let promise = crud.getX(req, res, db, db.pages, {method:'token'});
+        promise.then(
+            function(result){
+                res.setHeader('Content-Type', 'application/json');
+                res.send(JSON.stringify(result));
+            },
+            function(err){
+                res.setHeader('Content-Type', 'application/json');
+                res.send(JSON.stringify(err));
+            });
     });
 
     app.delete('/api/v1/page/:xId', (req, res) => {

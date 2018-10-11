@@ -4,28 +4,28 @@ const auth = require('./auth');
 const CONSTANTS = require('./const');
 
 function getX(req, res, db, dbX, options){
-    auth.isloggedIn(req, res, db, dbX, options, function(req, res, dbX){
-        console.log("callback inside auth.isloggedIn();");
-        // console.log('getX() req.params = ', req.params, '\n req.headers=', req.headers);
-        if(req.params && req.params.xId !== undefined){
-            dbX.findOne({ _id: req.params.xId }, function (err, doc) {// If no document is found, doc is null
-                if(!err){
-                    res.setHeader('Content-Type', 'application/json');
-                    if(doc){
-                        res.send(JSON.stringify({ status: 1, info: 'Success: document retrieved.', data: doc }));
+    let promise = new Promise(function(resolve, reject) {
+        auth.isloggedIn(req, res, db, dbX, options, function(req, res, dbX){
+            console.log("callback inside auth.isloggedIn();");
+            // console.log('getX() req.params = ', req.params, '\n req.headers=', req.headers);
+            if(req.params && req.params.xId !== undefined){
+                dbX.findOne({ _id: req.params.xId }, function (err, doc) {// If no document is found, doc is null
+                    if(!err){
+                        if(doc){
+                            resolve({ status: 1, info: 'Success: document retrieved.', data: doc });
+                        }else{
+                            reject({ status: 0, info: 'cannot find document!', data:{} });
+                        }
                     }else{
-                        res.send(JSON.stringify({ status: 0, info: 'cannot find document!', data:{} }));
+                        reject({ status: 0, info: 'Error:', data:{} });
                     }
-                }else{
-                    res.setHeader('Content-Type', 'application/json');
-                    res.send(JSON.stringify({ status: 0, info: err, data:{} }));
-                }
-            });
-        }else{
-            res.setHeader('Content-Type', 'application/json');
-            res.send(JSON.stringify({ status: 0, info: 'xId not exist!', data:{} }));
-        }
+                });
+            }else{
+                reject({ status: 0, info: 'xId not exist!', data:{} });
+            }
+        });
     });
+    return promise;
 }
 
 function listX(req, res, db, dbX, options){

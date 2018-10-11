@@ -14,7 +14,19 @@ function appRoute(app, db){
     });
 
     app.get('/api/v1/mock/:xId', (req, res) => {
-        crud.getX(req, res, db, db.mocks, {method:'passcode'});
+        let promise = crud.getX(req, res, db, db.mocks, {method:'passcode'});
+        console.log('---mock');
+        promise.then(
+            function(result){
+                console.log('---',result);
+                res.setHeader('Content-Type', 'application/json');
+                res.send(JSON.stringify(result));
+            },
+            function(err){
+                console.log('---',err);
+                res.setHeader('Content-Type', 'application/json');
+                res.send(JSON.stringify(err));
+            });
     });
 
     app.delete('/api/v1/mock/:xId', (req, res) => {

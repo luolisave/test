@@ -58,7 +58,7 @@ function isloggedIn(req, res, db, dbX, options, executeFunctionAfterCheck){
         });
     }else if(options && options.method === 'passcode'){
         let passcode = getPasscode(req, res);
-        console.log('auth method is: passcode.');
+        console.log('auth method is: passcode. CONSTANTS.PASSCODE=',CONSTANTS.PASSCODE);
         if(passcode && passcode === CONSTANTS.PASSCODE){
             executeFunctionAfterCheck(req, res, dbX);
         }else{
