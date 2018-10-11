@@ -3,6 +3,26 @@ const jsonSize = require('json-size');
 const auth = require('./auth');
 const CONSTANTS = require('./const');
 
+function listX(req, res, db, dbX, options){
+    let promise = new Promise(function(resolve, reject) {
+        auth.isloggedIn(req, res, db, dbX, options, function(req, res, dbX){
+            console.log('listX()'); // , '\n req.headers=', req.headers
+            dbX.find({}, function (err, docs){
+                if(!err){
+                    if(docs){
+                        resolve({ status: 1, info: 'Success: document retrieved.', data: docs });
+                    }else{
+                        reject({ status: 0, info: 'cannot find document!', data:{} });
+                    }
+                }else{
+                    reject({ status: 0, info: 'Error:', data:{} });
+                }
+            });
+        });
+    });
+    return promise;
+}
+
 function getX(req, res, db, dbX, options){
     let promise = new Promise(function(resolve, reject) {
         auth.isloggedIn(req, res, db, dbX, options, function(req, res, dbX){
@@ -28,110 +48,74 @@ function getX(req, res, db, dbX, options){
     return promise;
 }
 
-function listX(req, res, db, dbX, options){
-    auth.isloggedIn(req, res, db, dbX, options, function(req, res, dbX){
-        console.log('listPage() req.params = ', req.params); // , '\n req.headers=', req.headers
-        dbX.find({}, function (err, docs){
-            if(!err){
-                res.setHeader('Content-Type', 'application/json');
-                if(docs){
-                    res.send(JSON.stringify({ status: 1, info: 'Success: documents retrieved.', data: docs }));
-                }else{
-                    res.send(JSON.stringify({ status: 0, info: 'cannot find doc!', data:{} }));
-                }
-            }else{
-                res.setHeader('Content-Type', 'application/json');
-                res.send(JSON.stringify({ status: 0, info: err, data:{} }));
-            }
-        });
-    });
-}
-
 function createX(req, res, db, dbX, options){
-    auth.isloggedIn(req, res, db, dbX, options, function(req, res, dbX){
-        let pageObj = req.body;
-        let jsonSizeInBytes = jsonSize(pageObj);
-        console.log('--------->',pageObj, ' jsonSizeInBytes=',jsonSizeInBytes);
-        if(jsonSizeInBytes < CONSTANTS.PAGE_DOC_BYTES_LIMIT){
-            dbX.insert(pageObj, function (err, pageDoc) {   // Callback is optional
-                if(err){
-                    res.setHeader('Content-Type', 'application/json');
-                    res.send(JSON.stringify({ status: 0, info: 'Error: page not inserted.', data:{} }));
-                }else{
-                    res.setHeader('Content-Type', 'application/json');
-                    res.send(JSON.stringify({ status: 1, info: 'new page inserted', data:pageDoc }));
-                }
-                // console.log('inserted object:', pageDoc);
-            });
-        }else{
-            res.setHeader('Content-Type', 'application/json');
-            res.send(
-                JSON.stringify(
-                    {
-                        status: 0,
-                        info: `Error: exceeding document limits. Document size must less than ${CONSTANTS.PAGE_DOC_BYTES_LIMIT} bytes. Change const.js PAGE_DOC_BYTES_LIMIT to increase the limits.`,
-                        data:{}
-                    }
-                )
-            );
-        }
-
-    });
-}
-
-function updateX(req, res, db, dbX, options){
-    auth.isloggedIn(req, res, db, dbX, options, function(req, res, dbX){
-        let pageObj = req.body;
-        // console.log('--------->',pageObj);
-        if(req.params && req.params.xId !== undefined) {
+    let promise = new Promise(function(resolve, reject) {
+        auth.isloggedIn(req, res, db, dbX, options, function(req, res, dbX){
+            let pageObj = req.body;
             let jsonSizeInBytes = jsonSize(pageObj);
-            if(jsonSizeInBytes < CONSTANTS.PAGE_DOC_BYTES_LIMIT) {
-                dbX.update({_id:req.params.xId}, pageObj, function (err, numUpdated) {   // Callback is optional
+            console.log('--------->',pageObj, ' jsonSizeInBytes=',jsonSizeInBytes);
+            if(jsonSizeInBytes < CONSTANTS.PAGE_DOC_BYTES_LIMIT){
+                dbX.insert(pageObj, function (err, doc) {   // Callback is optional
                     if(err){
-                        res.setHeader('Content-Type', 'application/json');
-                        res.send(JSON.stringify({ status: 0, info: 'Error: page not updated.', data:{} }));
+                        reject({ status: 0, info: 'Error: page not inserted.:', data:{} });
                     }else{
-                        res.setHeader('Content-Type', 'application/json');
-                        res.send(JSON.stringify({ status: 1, info: `Success: ${numUpdated} record updated.`, data:{} }));
+                        resolve({ status: 1, info: 'Success: new page inserted.', data: doc });
                     }
                     // console.log('inserted object:', pageDoc);
                 });
             }else{
-                res.setHeader('Content-Type', 'application/json');
-                res.send(
-                    JSON.stringify(
-                        {
-                            status: 0,
-                            info: `Error: exceeding document limits. Document size must less than ${CONSTANTS.PAGE_DOC_BYTES_LIMIT} bytes. Change const.js PAGE_DOC_BYTES_LIMIT to increase the limits.`,
-                            data:{}
-                        }
-                    )
-                );
+                reject({ status: 0, info: `Error: exceeding document limits. Document size must less than ${CONSTANTS.PAGE_DOC_BYTES_LIMIT} bytes. Change const.js PAGE_DOC_BYTES_LIMIT to increase the limits.`, data:{} });
             }
-        }else{
-            res.setHeader('Content-Type', 'application/json');
-            res.send(JSON.stringify({ status: 0, info: 'Error: page id not provided.', data:{} }));
-        }
+
+        });
     });
+    return promise;
+}
+
+function updateX(req, res, db, dbX, options){
+    let promise = new Promise(function(resolve, reject) {
+        auth.isloggedIn(req, res, db, dbX, options, function(req, res, dbX){
+            let pageObj = req.body;
+            // console.log('--------->',pageObj);
+            if(req.params && req.params.xId !== undefined) {
+                let jsonSizeInBytes = jsonSize(pageObj);
+                if(jsonSizeInBytes < CONSTANTS.PAGE_DOC_BYTES_LIMIT) {
+                    dbX.update({_id:req.params.xId}, pageObj, function (err, numUpdated) {   // Callback is optional
+                        if(err){
+                            reject({ status: 0, info: 'Error: document not inserted.', data:{} });
+                        }else{
+                            resolve({ status: 1, info: `Success: ${numUpdated} record updated.`, data: {} });
+                        }
+                        // console.log('inserted object:', pageDoc);
+                    });
+                }else{
+                    reject({ status: 0, info: `Error: exceeding document limits. Document size must less than ${CONSTANTS.PAGE_DOC_BYTES_LIMIT} bytes. Change const.js PAGE_DOC_BYTES_LIMIT to increase the limits.`, data:{} });
+                }
+            }else{
+                reject({ status: 0, info: 'Error: document id not provided.', data:{} });
+            }
+        });
+    });
+    return promise;
 }
 
 function delX(req, res, db, dbX, options){
-    auth.isloggedIn(req, res, db, dbX, options, function(req, res, dbX){
-        if(req.params && req.params.xId !== undefined) {
-            dbX.remove({_id:req.params.xId},false,function(err, numRemoved){
-                if(err){
-                    res.setHeader('Content-Type', 'application/json');
-                    res.send(JSON.stringify({ status: 0, info: 'Error: page not deleted.', data:{} }));
-                }else{
-                    res.setHeader('Content-Type', 'application/json');
-                    res.send(JSON.stringify({ status: 1, info: `${numRemoved} line(s) removed.`, data:{} }));
-                }
-            });
-        }else{
-            res.setHeader('Content-Type', 'application/json');
-            res.send(JSON.stringify({ status: 0, info: 'Error: page id not provided.', data:{} }));
-        }
+    let promise = new Promise(function(resolve, reject) {
+        auth.isloggedIn(req, res, db, dbX, options, function(req, res, dbX){
+            if(req.params && req.params.xId !== undefined) {
+                dbX.remove({_id:req.params.xId},false,function(err, numRemoved){
+                    if(err){
+                        reject({ status: 0, info: 'Error: document not deleted.', data:{} });
+                    }else{
+                        resolve({ status: 1, info: `Success: ${numRemoved} line(s) removed.`, data: {} });
+                    }
+                });
+            }else{
+                reject({ status: 0, info: 'Error: page id not provided.', data:{} });
+            }
+        });
     });
+    return promise;
 }
 
 
