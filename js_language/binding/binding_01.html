@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+<head>
+    <title>Data Binding Test 01</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+    <style>
+        
+    </style>
+</head>
+<body>
+    <h1>Data Binding Test 01</h1>
+    
+    <form action="">
+        <input id="bind_me" autocomplete="off" placeholder="bind_me_placeholder" />
+    </form>
+    
+    <script>
+        function MyCtor(element, data) {
+            this.data = data;
+            this.element = element;
+            element.value = data;
+            element.addEventListener("change", this, false);
+        }
+        
+        MyCtor.prototype.handleEvent = function(event) {
+            switch (event.type) {
+                case "change": this.change(this.element.value);
+            }
+        };
+        
+        MyCtor.prototype.change = function(value) {
+            this.data = value;
+            this.element.value = value;
+        };
+        
+        
+        var obj = new MyCtor(document.getElementById("bind_me"), "20");
+
+        // simulate some JS based changes.
+        var i = 0;
+        setInterval(function() {
+            obj.change(parseInt(obj.element.value) + ++i);
+        }, 3000);
+    </script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+<head>
+    <title>Data Binding Test 02</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+    <style>
+        
+    </style>
+</head>
+<body>
+    <h1>Data Binding Test 02</h1>
+    
+    <p>https://blog.sessionstack.com/how-javascript-works-tracking-changes-in-the-dom-using-mutationobserver-86adc7446401</p>
+    
+    <form action="">
+        <input id="bind_me" autocomplete="off" placeholder="bind_me_placeholder" />
+    </form>
+    
+    <script>
+        var mutationObserver = new MutationObserver(function(mutations) {
+          mutations.forEach(function(mutation) {
+            console.log(mutation);
+          });
+        });
+        
+        // Starts listening for changes in the root HTML element of the page.
+        mutationObserver.observe(document.getElementById("bind_me"), {
+          attributes: true,
+          characterData: true,
+          childList: true,
+          subtree: true,
+          attributeOldValue: true,
+          characterDataOldValue: true
+        });
+        
+        // Stops the MutationObserver from listening for changes.
+        mutationObserver.disconnect();
+    </script>
+</body>
+</html>

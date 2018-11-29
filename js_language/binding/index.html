@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+<head>
+    <title>Data Binding Test</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+    <style>
+        
+    </style>
+</head>
+<body>
+    <h1>Data Binding Test</h1>
+    
+    <p>https://stackoverflow.com/questions/16483560/how-to-implement-dom-data-binding-in-javascript</p>
+    <p>https://stackoverflow.com/questions/36258502/why-has-object-observe-been-deprecated</p>
+    <ul>
+        <li>
+            <a target="_blank" href="binding_01.html">Binding Test 01</a>
+        </li>
+        <li>
+            <a target="_blank" href="binding_02.html">Binding Test 02</a>
+        </li>
+    </ul>
+    
+    <hr>
+    <p>
+        <h3>getters and setters</h3>
+        <pre>
+            var obj = {
+              get foo() {
+                console.log({ name: 'foo', object: obj, type: 'get' });
+                return obj._foo;
+              },
+              set bar(val) {
+                console.log({ name: 'bar', object: obj, type: 'set', oldValue: obj._bar });
+                return obj._bar = val;
+              }
+            };
+            
+            obj.bar = 2;
+            // {name: 'baz', object: <obj>, type: 'set', oldValue: undefined}
+            
+            obj.foo;
+            // {name: 'foo', object: <obj>, type: 'get'}
+        </pre>
+    </p>
+    <p>
+        <h3>MutationObserver</h3>
+        <p>https://blog.sessionstack.com/how-javascript-works-tracking-changes-in-the-dom-using-mutationobserver-86adc7446401</p>
+        <pre>
+            // when the dom changes - update the object
+            new MutationObserver(updateObj).observe(domElement, { 
+                attributes: true,
+                childList: true,
+                characterData: true
+            });
+        </pre>
+    </p>
+</body>
+</html>
