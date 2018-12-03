@@ -13,7 +13,7 @@
     <p>https://blog.sessionstack.com/how-javascript-works-tracking-changes-in-the-dom-using-mutationobserver-86adc7446401</p>
     
     <form action="">
-        <input id="bind_me" autocomplete="off" placeholder="bind_me_placeholder" />
+        <input id="bind_me" value="123" autocomplete="off" placeholder="bind_me_placeholder" />
     </form>
     
     <script>
@@ -34,7 +34,7 @@
         });
         
         // Stops the MutationObserver from listening for changes.
-        mutationObserver.disconnect();
+        // mutationObserver.disconnect();
     </script>
 </body>
 </html>

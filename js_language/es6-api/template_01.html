@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+<head>
+    <title>Template 01: 20 line template Engine</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+    <style>
+        
+    </style>
+</head>
+<body>
+    <h1>Template 01: 20 line template Engine</h1>
+    
+    <p>20 line template Engine: http://blog.jobbole.com/56689/</p>
+    <script>
+    
+
+var TemplateEngine = function(html, options) {
+    var re = /<%([^%>]+)?%>/g, reExp = /(^( )?(if|for|else|switch|case|break|{|}))(.*)?/g, code = 'var r=[];\n', cursor = 0;
+    var add = function(line, js) {
+        js? (code += line.match(reExp) ? line + '\n' : 'r.push(' + line + ');\n') :
+            (code += line != '' ? 'r.push("' + line.replace(/"/g, '\\"') + '");\n' : '');
+        return add;
+    }
+    while(match = re.exec(html)) {
+        add(html.slice(cursor, match.index))(match[1], true);
+        cursor = match.index + match[0].length;
+    }
+    add(html.substr(cursor, html.length - cursor));
+    code += 'return r.join("");';
+    return new Function(code.replace(/[\r\t\n]/g, '')).apply(options);
+}
+
+var template = '<p>Hello, my name is <%this.name%>. I\'m <%this.profile.age%> years old.</p>';
+template = template + 
+'<p>' +
+'My skills:' + 
+'<%for(var index in this.skills) {%>' + 
+'<a href="#"><%this.skills[index]%></a>' +
+'<%}%>' +
+'</p>';
+console.log(TemplateEngine(template, {
+    name: "Krasimir",
+    profile: { age: 29 },
+    skills: ["js", "html", "css"],
+    showSkills: true
+}));
+
+
+    </script>
+</body>
+</html>
