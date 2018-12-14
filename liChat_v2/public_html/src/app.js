@@ -13,7 +13,8 @@ var liApp = angular.module('liApp',[
         'ngResource',
         'ui.router',
         'pascalprecht.translate',
-        'ngAlertify'
+        'ngAlertify',
+        'ui.tinymce'
     ]);
 
 liApp.config(['$routeProvider', '$stateProvider', '$urlRouterProvider', '$translateProvider',

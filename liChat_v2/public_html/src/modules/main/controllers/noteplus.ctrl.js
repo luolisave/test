@@ -67,7 +67,13 @@ liApp.controller(
         });
 
         // init
+
           $scope.init = function(){
+            $scope.tinymceOptions = {
+                plugins: 'link image code',
+                toolbar: 'undo redo | bold italic | alignleft aligncenter alignright | code'
+              };
+              // editor.shortcuts.add('ctrl+a', "description of the shortcut", function() {});
 
               SimpleStorageService.getNote($scope.params.noteHash, "pass1234").then(function(rs){
                   if(!rs.status || rs.status === 0){
@@ -77,7 +83,6 @@ liApp.controller(
                       console.log("getNote rs=",rs);
                       $scope.note = rs.data;
                   }
-
               });
           };
 

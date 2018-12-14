@@ -9,13 +9,13 @@
   <div class="col-sm-12">
           <input class="form-control" type="hidden" ng-model="liNote.item.meta" placeholder="url">
   </div>
-    <div class="col-sm-12">
+    <div class="col-sm-12" ng-keydown="keyDownFunc($event)">
 
             <textarea
               class="form-control"
               style="min-height:480px;"
+              ui-tinymce="tinymceOptions"
               ng-model="note.content"
-              ng-keydown="keyDownFunc($event)"
               ></textarea>
             <br />
 
