@@ -1,7 +1,7 @@
 <form onsubmit="return false;">
 <div class="row">
-  <div class="col-sm-12">
-    <h3>Note:
+  <div class="col-sm-12 hidden-md hidden-lg">
+    <h3 style="margin-top: 0px;">Note:
       <!-- <span class="pull-right"><a href="#/main/settings">settings</a></span> -->
       <button id="btnSave" class="btn btn-primary pull-right" class="btn btn-primary btn-block" ng-click="saveNote()">Save Note</button>
     </h3>
@@ -15,6 +15,7 @@
               class="form-control"
               style="min-height:480px;"
               ng-model="note.content"
+              ng-keydown="keyDownFunc($event)"
               ></textarea>
             <br />
 

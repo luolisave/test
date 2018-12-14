@@ -13,7 +13,7 @@
 "use strict";
 
 liApp.controller(
-    'mainNoteController',
+    'bookmarkPageController',
     ['$scope', '$rootScope', '$window', '$stateParams', 'alertify', 'UserService', 'SimpleStorageService',
         function ($scope, $rootScope, $window, $stateParams, alertify, UserService, SimpleStorageService) {
           // ====================================================================================================== sop

@@ -14,8 +14,8 @@
 
 liApp.controller(
     'mainNotePlusController',
-    ['$scope', '$rootScope', '$stateParams', 'alertify', 'UserService', 'SimpleStorageService',
-        function ($scope, $rootScope, $stateParams, alertify, UserService, SimpleStorageService) {
+    ['$scope', '$rootScope', '$window', '$stateParams', 'alertify', 'UserService', 'SimpleStorageService',
+        function ($scope, $rootScope, $window, $stateParams, alertify, UserService, SimpleStorageService) {
           // ====================================================================================================== sop
           $scope.params = $stateParams; //$scope.params.noteHash
 
@@ -34,6 +34,39 @@ liApp.controller(
                 );
           };
 
+          //Ctrl + S ===========================================================
+        // http://blog.sodhanalibrary.com/2015/02/detect-ctrl-c-and-ctrl-v-using-angularjs.html#.XBPW11WJI2w
+        $scope.ctrlDown = false;
+        $scope.ctrlKey = 17, $scope.vKey = 86, $scope.cKey = 67;
+
+        $scope.keyDownFunc = function($event) {
+            if ($scope.ctrlDown && ($event.keyCode == $scope.cKey)) {
+                // alert('Ctrl + C pressed');
+                console.log('Ctrl + C pressed');
+            } else if ($scope.ctrlDown && ($event.keyCode == $scope.vKey)) {
+                // alert('Ctrl + V pressed');
+                console.log('Ctrl + V pressed');
+            } else if ($scope.ctrlDown && String.fromCharCode($event.which).toLowerCase() == 's') {
+                $event.preventDefault();
+                // alert('Ctrl + S pressed');
+                console.log('Ctrl + S pressed');
+                $scope.saveNote();
+            }
+        };
+
+        angular.element($window).bind("keyup", function($event) {
+            if ($event.keyCode == $scope.ctrlKey)
+                $scope.ctrlDown = false;
+            $scope.$apply();
+        });
+
+        angular.element($window).bind("keydown", function($event) {
+            if ($event.keyCode == $scope.ctrlKey)
+                $scope.ctrlDown = true;
+            $scope.$apply();
+        });
+
+        // init
           $scope.init = function(){
 
               SimpleStorageService.getNote($scope.params.noteHash, "pass1234").then(function(rs){
