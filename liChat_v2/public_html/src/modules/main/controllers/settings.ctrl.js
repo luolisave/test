@@ -13,23 +13,26 @@ liApp.controller(
             self.item = {};
             // {
             //   "passcode":"pass1234",
-            //   "setUrl": "http://lluo.comxa.com/storage/v1/set.php",
-            //   "getUrl": "http://lluo.comxa.com/storage/v1/get.php"
+            //   "apiUrl": "http://api.lluo.ca/storage/v3/",
             // }
             self.click = {
               save: function(){
-                  UserService.setUserSettings(self.item).then(function(data){
-                      alertify.success("settings saved to sync");
-                  });
+                  if(UserService.saveUserSettings(self.item)){
+                    alertify.success("User Setting saved.");
+                  }else{
+                    alertify.error("User Setting save failed.");
+                  }
               }
             };
 
             self.init = function(){
-              UserService.getUserSettings().then(function(data){
-                  self.item = data;
-                  alertify.success("settings retrived from sync.");
-                  //alertify.success("settings retrived from sync." + JSON.stringify(self.item));
-              });
+              var userSettingsItem = UserService.loadUserSettings();
+              if(userSettingsItem){
+                self.item = userSettingsItem;
+                alertify.success("User Settings loaded.");
+              }else{
+                alertify.error("User Settings failed to load.");
+              }
             };
 
             self.init();
