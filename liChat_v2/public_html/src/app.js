@@ -57,6 +57,14 @@ liApp.config(['$routeProvider', '$stateProvider', '$urlRouterProvider', '$transl
                 }
             )
             .state(
+                'main.noteplus',
+                {
+                    url:         '/noteplus/:noteHash',
+                    templateUrl: 'src/modules/main/templates/note/noteplus.html',
+                    controller:  'mainNotePlusController'
+                }
+            )
+            .state(
                 'main.thread',
                 {
                     url:         '/thread/:noteHash',

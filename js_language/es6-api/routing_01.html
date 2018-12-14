@@ -1,0 +1,101 @@
+<!doctype html>
+<html>
+<head>
+    <title>Template 01: 20 line template Engine</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+    <style>
+        #content{
+            border: 1px solid red;
+        }
+    </style>
+</head>
+<body>
+    <h1>Routing 001: basic routing</h1>
+    
+    <p>https://medium.com/@bryanmanuele/how-i-implemented-my-own-spa-routing-system-in-vanilla-js-49942e3c4573</p>
+    
+    <ul>
+        <li>
+            <a href="#">Home</a>
+        </li>
+        <li>
+            <a href="#/portfolio">portfolioPage</a>
+        </li>
+        <li>
+            <a href="#/resume">resumePage</a>
+        </li>
+        <li>
+            <a href="#/contact">contactPage</a>
+        </li>
+        <li>
+            <a href="#/dsfdsaf/dsfsa">invalid page</a>
+        </li>
+    </ul>
+    
+    <div id="content">
+        
+    </div>
+    
+    
+    <script>
+        homePage = `
+            <div>
+                this is home page.
+            </div>
+        `;
+        
+        portfolioPage = `
+            <div>
+                this is portfolioPage.
+            </div>
+        `;
+        
+        resumePage = `
+            <div>
+                this is resumePage.
+            </div>
+        `;
+        
+        contactPage = `
+            <div>
+                this is content page.
+            </div>
+        `;
+        
+        nf404Page = `
+            <div>
+                404, page not found.
+            </div>
+        `;
+        
+        routes = {
+          '': homePage,
+          '#': homePage,
+          '#/portfolio': portfolioPage,
+          '#/resume': resumePage,
+          '#/contact': contactPage,
+          '#/404': nf404Page
+        };
+        
+        
+        console.log('window.location = ', window.location);
+        console.log('window.location.pathname = ', window.location.pathname);
+        // let contentDiv = document.getElementById('content');
+        // contentDiv.innerHTML = routes[window.location.pathname];
+        let contentDiv = document.getElementById('content');
+        if(routes[window.location.hash]){
+            contentDiv.innerHTML = routes[window.location.hash];
+        }else{
+            contentDiv.innerHTML = routes['#/404'];
+        }
+        
+        window.onhashchange = function(){
+            if(routes[window.location.hash]){
+                contentDiv.innerHTML = routes[window.location.hash];
+            }else{
+                contentDiv.innerHTML = routes['#/404'];
+            }
+        }
+    </script>
+</body>
+</html>

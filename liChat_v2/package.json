@@ -1,7 +1,7 @@
 {
   "name": "liChat",
   "license": "MIT",
-  "version": "2.0.1",
+  "version": "2.1.1",
   "description": "Simple chat application based on websocket.",
   "repository": {
     "type": "git",

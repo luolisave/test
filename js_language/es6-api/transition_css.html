@@ -1,0 +1,23 @@
+.td-progress .td-progress__wrapper .td-progress__progress {
+    height: 10px;
+    background-color: #008A00;
+    border-radius: 10px;
+    transition: width 1s ease-in-out;
+    transition-property: width;
+    transition-duration: 1s;
+    transition-timing-function: ease-in-out;
+    transition-delay: 0s;
+}
+
+
+scss :
+
+@for $i from 1 through 100 {
+  .w-#{$i} {
+    width: percentage($i / 100);
+  }
+  .h-#{$i} {
+    height: percentage($i / 100);
+  }
+
+}
