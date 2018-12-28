@@ -18,6 +18,7 @@ liApp.controller(
         function ($scope, $rootScope, $window, $stateParams, alertify, UserService, SimpleStorageService) {
           // ====================================================================================================== sop
           $scope.params = $stateParams; //$scope.params.noteHash
+          $rootScope.noteHash = $scope.params.noteHash;
           $scope.bookmarkTitle = "";
           $scope.bookmarkURL = "";
 
@@ -49,33 +50,30 @@ liApp.controller(
           }
           
           $scope.addBookmark = function(){
-            if($scope.bookmarkTitle && $scope.bookmarkTitle !== ''){
-                if($scope.bookmarkURL && $scope.bookmarkURL !== ''){
-                    console.log('$scope.note = ', $scope.note);
-                    if(!$scope.note){
-                        $scope.note = {};
-                    }
-                    if($scope.note && !$scope.note.bookmarks){
-                        $scope.note.bookmarks = [];
-                    }
-                    $scope.note.bookmarks.push(
-                        {
-                            title: $scope.bookmarkTitle,
-                            url: $scope.bookmarkURL
-                        }
-                    );
-                    $scope.saveBookmarks();
-                }else{
-                    alertify.error("error: "+"Please enter bookmark URL.");
+            if($scope.bookmarkURL && $scope.bookmarkURL !== ''){
+                if(!$scope.bookmarkTitle || $scope.bookmarkTitle !== ''){
+                    $scope.bookmarkTitle = $scope.bookmarkURL;
                 }
+                if(!$scope.note){
+                    $scope.note = {};
+                }
+                if($scope.note && !$scope.note.bookmarks){
+                    $scope.note.bookmarks = [];
+                }
+                $scope.note.bookmarks.push(
+                    {
+                        title: $scope.bookmarkTitle,
+                        url: $scope.bookmarkURL
+                    }
+                );
+                $scope.saveBookmarks();
             }else{
-                alertify.error("error: "+"Please enter bookmark title.");
+                alertify.error("error: "+"Please enter bookmark URL.");
             }
           }
 
           $scope.removeBookmark = function(index){
                 $scope.note.bookmarks.splice(index,1);
-                $scope.saveBookmarks();
           }
 
           $scope.removeAllBookmarks = function(){

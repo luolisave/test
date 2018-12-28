@@ -1,5 +1,4 @@
 <div>
-    
     <!-- 
     <div class="row">
         <div class="col-sm-12 hidden-md hidden-lg">
@@ -9,21 +8,32 @@
         </div>
     </div> 
     -->
-
     <div class="row">
         <div class="col-sm-12">
                 <ul class="list-inline">
                     <li>
-                        <a class="nav-link active" href="#/main/bookmark/page/li_express_bookmark_page_tmp">Tmp</a>
+                        <a 
+                        class="nav-link btn btn-default" 
+                        ng-class="{'active': noteHash === 'li_express_bookmark_page_tmp'}" 
+                        href="#/main/bookmark/page/li_express_bookmark_page_tmp">Tmp</a>
                     </li>
                     <li>
-                        <a class="nav-link" href="#/main/bookmark/page/li_express_bookmark_page_js">JS</a>
+                        <a 
+                        class="nav-link btn btn-default" 
+                        ng-class="{'active': noteHash === 'li_express_bookmark_page_js'}"  
+                        href="#/main/bookmark/page/li_express_bookmark_page_js">JS</a>
                     </li>
                     <li>
-                        <a class="nav-link" href="#/main/bookmark/page/li_express_bookmark_page_buy">Buy</a>
+                        <a 
+                        class="nav-link btn btn-default" 
+                        ng-class="{'active': noteHash === 'li_express_bookmark_page_buy'}"  
+                        href="#/main/bookmark/page/li_express_bookmark_page_buy">Buy</a>
                     </li>
                     <li>
-                        <a class="nav-link" href="#/main/bookmark/page/li_express_bookmark_page_trash">Trash</a>
+                        <a 
+                        class="nav-link btn btn-default" 
+                        ng-class="{'active': noteHash === 'li_express_bookmark_page_trash'}"  
+                        href="#/main/bookmark/page/li_express_bookmark_page_trash">Trash</a>
                     </li>
                 </ul>
         </div>
