@@ -66,7 +66,24 @@ liApp.controller(
                         url: $scope.bookmarkURL
                     }
                 );
-                $scope.saveBookmarks();
+
+                // $scope.saveBookmarks();
+                SimpleStorageService
+                .setNote($scope.params.noteHash,"pass1234", $scope.note)
+                .then(
+                    function(rs){
+                        console.log("rs", rs);
+                          if(!rs.status || rs.status === 0){
+                              alertify.error("error: "+rs.info);
+                          }else{
+                            $scope.bookmarkTitle = '';
+                            $scope.bookmarkURL = '';
+                            alertify.success("saved");
+                          }
+                    }
+                );
+
+
             }else{
                 alertify.error("error: "+"Please enter bookmark URL.");
             }
