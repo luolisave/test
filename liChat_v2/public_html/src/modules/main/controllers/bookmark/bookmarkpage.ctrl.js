@@ -51,7 +51,7 @@ liApp.controller(
           
           $scope.addBookmark = function(){
             if($scope.bookmarkURL && $scope.bookmarkURL !== ''){
-                if(!$scope.bookmarkTitle || $scope.bookmarkTitle !== ''){
+                if(!$scope.bookmarkTitle || $scope.bookmarkTitle === ''){
                     $scope.bookmarkTitle = $scope.bookmarkURL;
                 }
                 if(!$scope.note){
