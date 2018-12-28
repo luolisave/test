@@ -77,7 +77,7 @@ liApp.config(['$routeProvider', '$stateProvider', '$urlRouterProvider', '$transl
                 'main.bookmark.page',
                 {
                     url:         '/page/:noteHash',
-                    templateUrl: 'src/modules/main/templates/bookmark/page.html',
+                    templateUrl: 'src/modules/main/templates/bookmark/bookmark_page.html',
                     controller:  'bookmarkPageController'
                 }
             )

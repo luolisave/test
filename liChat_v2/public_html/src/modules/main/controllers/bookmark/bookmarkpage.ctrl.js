@@ -18,8 +18,10 @@ liApp.controller(
         function ($scope, $rootScope, $window, $stateParams, alertify, UserService, SimpleStorageService) {
           // ====================================================================================================== sop
           $scope.params = $stateParams; //$scope.params.noteHash
+          $scope.bookmarkTitle = "";
+          $scope.bookmarkURL = "";
 
-          $scope.saveNote = function(){
+          $scope.saveBookmarks = function(){
               SimpleStorageService
                 .setNote($scope.params.noteHash,"pass1234", $scope.note)
                 .then(
@@ -33,6 +35,46 @@ liApp.controller(
                     }
                 );
           };
+
+          
+          $scope.addBookmark = function(){
+            if($scope.bookmarkTitle && $scope.bookmarkTitle !== ''){
+                if($scope.bookmarkURL && $scope.bookmarkURL !== ''){
+                    console.log('$scope.note = ', $scope.note);
+                    if(!$scope.note){
+                        $scope.note = {};
+                    }
+                    if($scope.note && !$scope.note.bookmarks){
+                        $scope.note.bookmarks = [];
+                    }
+                    $scope.note.bookmarks.push(
+                        {
+                            title: $scope.bookmarkTitle,
+                            url: $scope.bookmarkURL
+                        }
+                    );
+                    $scope.saveBookmarks();
+                }else{
+                    alertify.error("error: "+"Please enter bookmark URL.");
+                }
+            }else{
+                alertify.error("error: "+"Please enter bookmark title.");
+            }
+          }
+
+          $scope.removeBookmark = function(index){
+                $scope.note.bookmarks.splice(index,1);
+                $scope.saveBookmarks();
+          }
+
+          $scope.removeAllBookmarks = function(){
+                $scope.note.bookmarks = [];
+                $scope.saveBookmarks();
+          }
+
+        //   $scope.retriveTitle = function(){
+        //       // TODO:   https://stackoverflow.com/questions/7901760/how-can-i-get-the-title-of-a-webpage-given-the-url-an-external-url-using-jquer
+        //   };
 
         //Ctrl + S ===========================================================
         // http://blog.sodhanalibrary.com/2015/02/detect-ctrl-c-and-ctrl-v-using-angularjs.html#.XBPW11WJI2w
