@@ -36,6 +36,17 @@ liApp.controller(
                 );
           };
 
+          $scope.generateQRcode = function(index, url){
+            new QRCode(document.getElementById("qrcode_"+index), url);
+          }
+
+          $scope.clearInnerHtml = function(index){
+              jQuery("#qrcode_"+index).html('');
+          }
+
+          $scope.trunOnRemove = function(){
+              $scope.flageRemoveBtn = true;
+          }
           
           $scope.addBookmark = function(){
             if($scope.bookmarkTitle && $scope.bookmarkTitle !== ''){
