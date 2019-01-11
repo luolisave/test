@@ -14,7 +14,16 @@ liApp.factory(
         function UserService($q, $http, alertify) {
             var service = {};
 
+            service.saveUserSettings = function(item2save){
+                localStorage.setItem('userSettings', JSON.stringify(item2save));
+                return true;
+            }
 
+            service.loadUserSettings = function(){
+                var item2save = localStorage.getItem('userSettings');
+                item2save = JSON.parse(item2save);
+                return item2save;
+            }
 
 
             return service;

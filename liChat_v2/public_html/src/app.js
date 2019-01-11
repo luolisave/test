@@ -13,7 +13,8 @@ var liApp = angular.module('liApp',[
         'ngResource',
         'ui.router',
         'pascalprecht.translate',
-        'ngAlertify'
+        'ngAlertify',
+        'ui.tinymce'
     ]);
 
 liApp.config(['$routeProvider', '$stateProvider', '$urlRouterProvider', '$translateProvider',
@@ -62,6 +63,22 @@ liApp.config(['$routeProvider', '$stateProvider', '$urlRouterProvider', '$transl
                     url:         '/noteplus/:noteHash',
                     templateUrl: 'src/modules/main/templates/note/noteplus.html',
                     controller:  'mainNotePlusController'
+                }
+            )
+            .state(
+                'main.bookmark',
+                {
+                    url:         '/bookmark',
+                    templateUrl: 'src/modules/main/templates/bookmark/bookmark.html',
+                    controller:  'bookmarkController'
+                }
+            )
+            .state(
+                'main.bookmark.page',
+                {
+                    url:         '/page/:noteHash',
+                    templateUrl: 'src/modules/main/templates/bookmark/bookmark_page.html',
+                    controller:  'bookmarkPageController'
                 }
             )
             .state(

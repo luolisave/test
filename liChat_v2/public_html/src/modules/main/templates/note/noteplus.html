@@ -1,7 +1,7 @@
 <form onsubmit="return false;">
 <div class="row">
-  <div class="col-sm-12">
-    <h3>Note Plus:
+  <div class="col-sm-12 hidden-md hidden-lg">
+    <h3 style="margin-top: 0px;">Note Plus:
       <!-- <span class="pull-right"><a href="#/main/settings">settings</a></span> -->
       <button id="btnSave" class="btn btn-primary pull-right" class="btn btn-primary btn-block" ng-click="saveNote()">Save Note</button>
     </h3>
@@ -9,11 +9,12 @@
   <div class="col-sm-12">
           <input class="form-control" type="hidden" ng-model="liNote.item.meta" placeholder="url">
   </div>
-    <div class="col-sm-12">
+    <div class="col-sm-12" ng-keydown="keyDownFunc($event)">
 
             <textarea
               class="form-control"
               style="min-height:480px;"
+              ui-tinymce="tinymceOptions"
               ng-model="note.content"
               ></textarea>
             <br />
@@ -29,7 +30,7 @@
 
 <div class="row">
   <div class="col-sm-12">
-
+      
   </div>
 </div>
 </form>

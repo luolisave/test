@@ -1,0 +1,96 @@
+<div>
+    <div class="row">
+        <div class="col-sm-3"  style="padding-top:8px;">
+            <input type="text" class="form-control" name="bookmarkTitle" ng-model="bookmarkTitle" placeholder="url title is optional" /> 
+        </div>
+        <div class="col-sm-9" style="padding-top:8px; padding-bottom: 8px;">
+            <input type="text" class="form-control" name="bookmarkURL" ng-model="bookmarkURL" placeholder="url put here" /> 
+        </div>
+        
+        <div class="col-sm-6">
+
+        </div>
+        <div class="col-sm-6">
+            <div class="pull-right" style="padding-left:24px;">
+                <button class="btn btn-primary" ng-click="addBookmark()">Add</button>
+            </div>
+            <div class="pull-right">
+                <!-- <button class="btn btn-primary pull-right" ng-click="retriveTitle()">Retrieve Title</button> -->
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12" style="padding-top: 30px;"></div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+                <table ng-if="note && note.bookmarks && note.bookmarks.length > 0" class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">URL</th>
+                            <th scope="col"><span class="pull-right">Options</span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in note.bookmarks">
+                            <td scope="row" style="padding:0px;">
+                                <a 
+                                    href="{{item.url}}" 
+                                    target="_blank" 
+                                    style="display: inline-block; width: 100%; font-size: 2rem; padding-top:12px; padding-bottom: 12px"
+                                    class="dont-break-out"
+                                >
+                                    {{item.title}}
+                                </a>
+                                <div style="display:inline-block;" id="qrcode_{{$index}}" ng-click="clearInnerHtml($index)"></div>
+                            </td>
+                            <td style="min-width: 160px; padding: 0px;     vertical-align: middle;">
+                                <div class="pull-right" style="padding-left:40px;" ng-if="flageRemoveBtn">
+                                    <button class="btn btn-danger" ng-click="removeBookmark($index)"><span class="glyphicon glyphicon-trash"></span></button>
+                                </div>
+
+                                <div class="pull-right" style="padding-left:24px;">
+                                    <button class="btn btn-primary" ng-click="generateQRcode($index, item.url)"><span class="glyphicon glyphicon-qrcode"></span></button>
+                                </div>
+                            </td>
+                            
+                            
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div ng-if="!(note && note.bookmarks && note.bookmarks.length > 0)" style="text-align:center">
+                    <h2>Empty bookmark list.</h2>
+                </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12" style="padding-top: 150px;"></div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-sm-5"></div>
+        <div class="col-sm-2" style="text-align:center;">
+                <!--                 
+                <div style="display:inline-block;" ng-if="flageRemoveBtn">
+                    <button class="btn btn-danger" ng-click="removeAllBookmarks()">Remove ALL</button>
+                </div> 
+                -->
+
+                <div style="display:inline-block;" ng-if="flageRemoveBtn">
+                    <button class="btn btn-danger" ng-click="saveBookmarks()">Save ALL</button>
+                </div>
+                
+                <div style="display:inline-block;" ng-if="!flageRemoveBtn">
+                    <button class="btn btn-warning" ng-click="trunOnRemove()">Trun on Remove Buttons</button>
+                </div>
+        </div>
+        <div class="col-sm-5"></div>
+    </div>
+
+
+</div>

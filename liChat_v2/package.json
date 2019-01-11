@@ -1,5 +1,5 @@
 {
-  "name": "liChat",
+  "name": "lichat",
   "license": "MIT",
   "version": "2.1.1",
   "description": "Simple chat application based on websocket.",
