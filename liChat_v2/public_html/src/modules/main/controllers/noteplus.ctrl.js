@@ -44,8 +44,15 @@ liApp.controller(
 
             // https://github.com/angular-ui/ui-tinymce
             $scope.tinymceOptions = {
-                plugins: 'link image code',
-                toolbar: 'undo redo | bold italic | alignleft aligncenter alignright | code',
+                theme: "modern",
+                plugins: [
+                    "advlist autolink lists link image charmap print preview hr anchor pagebreak",
+                    "searchreplace wordcount visualblocks visualchars code fullscreen",
+                    "insertdatetime media nonbreaking save table directionality",
+                    "emoticons template paste textcolor colorpicker textpattern imagetools"
+                ],
+                toolbar1: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent",
+                toolbar2: "print preview media | link image | forecolor backcolor emoticons",
                 setup: function(editor) {
                     editor.on("keyup", function($event) {
                         // console.log('editor key up, editor =', editor, ' $event = ', $event);
