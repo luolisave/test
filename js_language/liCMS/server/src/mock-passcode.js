@@ -2,8 +2,8 @@ const crud = require('./crud');
 const currentDB = 'mocks';
 
 function appRoute(app, db){
-    app.get('/mock/list', (req, res) => {
-        let promise = crud.listX(req, res, db, db[currentDB], {method:'null'});
+    app.get('/api/v1/mock/list', (req, res) => {
+        let promise = crud.listX(req, res, db, db[currentDB], {method:'passcode'});
         promise.then(
             function(result){
                 res.setHeader('Content-Type', 'application/json');
@@ -15,8 +15,8 @@ function appRoute(app, db){
             });
     });
 
-    app.get('/mock/:xId', (req, res) => {
-        let promise = crud.getX(req, res, db, db[currentDB], {method:'null'});
+    app.get('/api/v1/mock/:xId', (req, res) => {
+        let promise = crud.getX(req, res, db, db[currentDB], {method:'passcode'});
         console.log('---mock');
         promise.then(
             function(result){
@@ -31,8 +31,8 @@ function appRoute(app, db){
             });
     });
 
-    app.post('/mock/create', (req, res) => {
-        let promise = crud.createX(req, res, db, db[currentDB], {method:'null'});
+    app.post('/api/v1/mock/create', (req, res) => {
+        let promise = crud.createX(req, res, db, db[currentDB], {method:'passcode'});
         promise.then(
             function(result){
                 res.setHeader('Content-Type', 'application/json');
@@ -44,8 +44,8 @@ function appRoute(app, db){
             });
     });
 
-    app.patch('/mock/:xId', (req, res) => {
-        let promise = crud.updateX(req, res, db, db[currentDB], {method:'null'});
+    app.patch('/api/v1/mock/:xId', (req, res) => {
+        let promise = crud.updateX(req, res, db, db[currentDB], {method:'passcode'});
         promise.then(
             function(result){
                 res.setHeader('Content-Type', 'application/json');
@@ -58,9 +58,9 @@ function appRoute(app, db){
     });
 
 
-    app.delete('/mock/:xId', (req, res) => {
-        crud.delX(req, res, db, db.mocks, {method:'null'});
-        let promise = crud.delX(req, res, db, db[currentDB], {method:'null'});
+    app.delete('/api/v1/mock/:xId', (req, res) => {
+        crud.delX(req, res, db, db.mocks, {method:'passcode'});
+        let promise = crud.delX(req, res, db, db[currentDB], {method:'passcode'});
         promise.then(
             function(result){
                 res.setHeader('Content-Type', 'application/json');
