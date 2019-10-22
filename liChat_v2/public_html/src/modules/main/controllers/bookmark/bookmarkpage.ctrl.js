@@ -18,8 +18,11 @@ liApp.controller(
         function ($scope, $rootScope, $window, $stateParams, alertify, UserService, SimpleStorageService) {
           // ====================================================================================================== sop
           $scope.params = $stateParams; //$scope.params.noteHash
+          $rootScope.noteHash = $scope.params.noteHash;
+          $scope.bookmarkTitle = "";
+          $scope.bookmarkURL = "";
 
-          $scope.saveNote = function(){
+          $scope.saveBookmarks = function(){
               SimpleStorageService
                 .setNote($scope.params.noteHash,"pass1234", $scope.note)
                 .then(
@@ -33,6 +36,71 @@ liApp.controller(
                     }
                 );
           };
+
+          $scope.generateQRcode = function(index, url){
+            new QRCode(document.getElementById("qrcode_"+index), url);
+          }
+
+          $scope.clearInnerHtml = function(index){
+              jQuery("#qrcode_"+index).html('');
+          }
+
+          $scope.trunOnRemove = function(){
+              $scope.flageRemoveBtn = true;
+          }
+          
+          $scope.addBookmark = function(){
+            if($scope.bookmarkURL && $scope.bookmarkURL !== ''){
+                if(!$scope.bookmarkTitle || $scope.bookmarkTitle === ''){
+                    $scope.bookmarkTitle = $scope.bookmarkURL;
+                }
+                if(!$scope.note){
+                    $scope.note = {};
+                }
+                if($scope.note && !$scope.note.bookmarks){
+                    $scope.note.bookmarks = [];
+                }
+                $scope.note.bookmarks.push(
+                    {
+                        title: $scope.bookmarkTitle,
+                        url: $scope.bookmarkURL
+                    }
+                );
+
+                // $scope.saveBookmarks();
+                SimpleStorageService
+                .setNote($scope.params.noteHash,"pass1234", $scope.note)
+                .then(
+                    function(rs){
+                        console.log("rs", rs);
+                          if(!rs.status || rs.status === 0){
+                              alertify.error("error: "+rs.info);
+                          }else{
+                            $scope.bookmarkTitle = '';
+                            $scope.bookmarkURL = '';
+                            alertify.success("saved");
+                          }
+                    }
+                );
+
+
+            }else{
+                alertify.error("error: "+"Please enter bookmark URL.");
+            }
+          }
+
+          $scope.removeBookmark = function(index){
+                $scope.note.bookmarks.splice(index,1);
+          }
+
+          $scope.removeAllBookmarks = function(){
+                $scope.note.bookmarks = [];
+                $scope.saveBookmarks();
+          }
+
+        //   $scope.retriveTitle = function(){
+        //       // TODO:   https://stackoverflow.com/questions/7901760/how-can-i-get-the-title-of-a-webpage-given-the-url-an-external-url-using-jquer
+        //   };
 
         //Ctrl + S ===========================================================
         // http://blog.sodhanalibrary.com/2015/02/detect-ctrl-c-and-ctrl-v-using-angularjs.html#.XBPW11WJI2w

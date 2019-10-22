@@ -18,7 +18,9 @@ db.mocks.loadDatabase();
 var auth = require('./src/auth');
 var user = require('./src/user');
 var page = require('./src/page');
-var mock = require('./src/mock');
+// mock and mock-passcode share same database file (mocks)
+var mockPasscode = require('./src/mock-passcode'); //mock requires passcode
+var mock = require('./src/mock');  // mock with free style
 
 
 // app config
@@ -28,6 +30,7 @@ app.use(bodyParser.json());
 app.use('/', express.static(path.join(__dirname, 'public'))); // app.use(express.static('public'));
 page.appRoute(app, db);
 user.appRoute(app, db);
+mockPasscode.appRoute(app, db);
 mock.appRoute(app, db);
 
 // Start app

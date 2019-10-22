@@ -17,7 +17,7 @@ liApp.controller(
     ['$scope', '$rootScope', '$window', '$stateParams', 'alertify', 'UserService', 'SimpleStorageService',
         function ($scope, $rootScope, $window, $stateParams, alertify, UserService, SimpleStorageService) {
           // ====================================================================================================== sop
-          // $scope.params = $stateParams; //$scope.params.noteHash
+          $scope.params = $stateParams; //$scope.params.noteHash
 
           // init
           $scope.init = function(){
